@@ -119,7 +119,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
 
       {/* Corner accents */}
       <div
-        className="absolute top-7 left-8 flex items-center gap-3"
+        className="absolute top-5 left-5 md:top-7 md:left-8 flex items-center gap-3"
         style={{
           opacity: showUI ? 1 : 0,
           transform: showUI ? "translateY(0)" : "translateY(-8px)",
@@ -136,7 +136,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
       </div>
 
       <div
-        className="absolute top-7 right-8"
+        className="absolute top-5 right-5 md:top-7 md:right-8"
         style={{
           opacity: showUI ? 1 : 0,
           transition: "opacity 0.7s ease 0.2s",
@@ -160,7 +160,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
           <h1
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(3rem, 9vw, 9rem)",
+              fontSize: "clamp(2.4rem, 9vw, 9rem)",
               fontWeight: 400,
               letterSpacing: "-0.02em",
               lineHeight: 1,

@@ -46,7 +46,7 @@ export default function ProductsScene() {
       />
 
       {/* Lamp reveal header */}
-      <LampContainer className="min-h-[60vh]">
+      <LampContainer className="min-h-[50vh] md:min-h-[60vh]">
         <SectionLabel index="//04" title="PRODUCTS" className="mb-5" />
         {/* h2 — correct level after h1 in hero (ui-ux-pro-max §1 heading-hierarchy) */}
         <h2

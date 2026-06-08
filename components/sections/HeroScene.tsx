@@ -85,7 +85,7 @@ export default function HeroScene() {
       </div>
 
       {/* ── Main content — bottom-anchored editorial layout ── */}
-      <div className="relative z-10 flex-1 flex flex-col justify-end px-6 md:px-10 lg:px-16 pb-24 md:pb-32 max-w-[90rem] mx-auto w-full pointer-events-none">
+      <div className="relative z-10 flex-1 flex flex-col justify-end px-5 md:px-10 lg:px-16 pb-20 md:pb-32 max-w-[90rem] mx-auto w-full pointer-events-none">
         <div ref={headRef} style={{ opacity: 0 }}>
           <h1 id="hero-heading" className="t-display mb-8">
             Software

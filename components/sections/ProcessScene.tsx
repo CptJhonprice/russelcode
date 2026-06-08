@@ -203,7 +203,7 @@ export default function ProcessScene() {
             ref={ghostRef}
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(12rem, 28vw, 26rem)",
+              fontSize: "clamp(4.5rem, 25vw, 28rem)",
               fontWeight: 400,
               lineHeight: 1,
               color: "#e2dfd9",
@@ -243,8 +243,8 @@ export default function ProcessScene() {
             {STEPS[0].copy}
           </p>
 
-          {/* Detail line */}
-          <div className="flex items-center gap-3 mt-8">
+          {/* Detail line — hidden on mobile */}
+          <div className="hidden sm:flex items-center gap-3 mt-8">
             <div style={{ width: 16, height: 1, background: "#1e3a52", flexShrink: 0 }} />
             <span
               ref={detailRef}
@@ -283,8 +283,8 @@ export default function ProcessScene() {
                   className="step-lbl"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    fontSize: "0.5rem",
-                    letterSpacing: "0.22em",
+                    fontSize: "clamp(0.34rem, 0.9vw, 0.5rem)",
+                    letterSpacing: "0.12em",
                     color: i === 0 ? "#e2dfd9" : "#1a2a38",
                     transition: "color 0.4s ease",
                   }}

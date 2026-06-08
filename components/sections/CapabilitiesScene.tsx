@@ -54,7 +54,7 @@ export default function CapabilitiesScene() {
             >
               What we
               <br />
-              <em className="not-italic" style={{ color: "var(--color-text-muted)" }}>
+              <em className="not-italic" style={{ color: "rgba(74,130,168,0.55)" }}>
                 build.
               </em>
             </h2>
