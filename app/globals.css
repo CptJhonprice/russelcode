@@ -226,7 +226,7 @@ button, a, [role="button"] {
   z-index: 10000;
 }
 .cursor-ring-inner {
-  width: 36px; height: 36px;
+  width: 22px; height: 22px;
   border-radius: 50%;
   border: 1px solid rgba(74,130,168,0.5);
   transform: translate(-50%, -50%);
