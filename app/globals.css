@@ -1,26 +1,236 @@
 @import "tailwindcss";
 
+/* ━━━ LOCAL FONTS (from ui-styling skill canvas-fonts) ━━━━━━━━━━━ */
+@font-face {
+  font-family: "Gloock";
+  src: url("/fonts/Gloock-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "InstrumentSans";
+  src: url("/fonts/InstrumentSans-Regular.ttf") format("truetype");
+  font-weight: 300 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "InstrumentSans";
+  src: url("/fonts/InstrumentSans-Bold.ttf") format("truetype");
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("/fonts/JetBrainsMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("/fonts/JetBrainsMono-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ━━━ DESIGN TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:            #070709;
+  --bg-raised:     #0c0c10;
+  --bg-overlay:    #111116;
+  --fg:            #e2dfd9;
+  --fg-sub:        #7a7672;
+  --fg-muted:      #3a3a42;
+  --fg-ghost:      #1c1c22;
+  --accent:        #4a82a8;
+  --accent-dim:    #1e3040;
+  --accent-glow:   rgba(74, 130, 168, 0.14);
+  --border:        #0e0e12;
+  --border-mid:    #181820;
+  --border-strong: #242430;
+
+  --font-display: "Gloock", "Georgia", serif;
+  --font-body:    "InstrumentSans", "Inter", system-ui, sans-serif;
+  --font-mono:    "JetBrainsMono", "Fira Code", monospace;
+
+  --ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ━━━ RESET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+*, *::before, *::after { box-sizing: border-box; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  scroll-behavior: auto;
+  cursor: none; /* replaced by custom cursor */
 }
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ━━━ SKIP LINK ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.skip-link {
+  position: absolute; top: -100%; left: 1rem; z-index: 9999;
+  padding: 0.5rem 1rem; background: var(--accent); color: #fff;
+  font-size: 0.875rem; border-radius: 0 0 4px 4px;
+  transition: top 150ms;
+}
+.skip-link:focus { top: 0; }
+
+/* ━━━ TYPOGRAPHY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Editorial serif display — Gloock from skill canvas-fonts */
+.t-display {
+  font-family: var(--font-display);
+  font-size: clamp(3.8rem, 11vw, 12rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.86;
+  color: var(--fg);
+}
+
+/* Section headline — sans */
+.t-headline {
+  font-family: var(--font-body);
+  font-size: clamp(2.4rem, 6vw, 6.5rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 0.94;
+  color: var(--fg);
+}
+
+/* Sticky scene copy */
+.t-scene {
+  font-family: var(--font-body);
+  font-size: clamp(1.9rem, 4.2vw, 4.8rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  color: var(--fg);
+}
+
+/* Technical mono label — JetBrains from skill */
+.t-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-sub);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Body */
+.t-body {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--fg-sub);
+}
+
+/* Mono utility */
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted);
+}
+
+/* ━━━ LENIS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ━━━ INTERACTIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+button, a, [role="button"] {
+  cursor: none;
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ━━━ TICKER / MARQUEE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ━━━ SCROLL INDICATOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes scrollPulse {
+  0%   { transform: translateY(-100%); }
+  50%  { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+/* ━━━ CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+}
+.cursor-dot-inner {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9997;
+}
+.cursor-ring-inner {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(74,130,168,0.5);
+  transform: translate(-50%, -50%);
+}
+
+/* ━━━ REDUCED MOTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track { animation: none; }
+  html { cursor: auto; }
+  button, a { cursor: pointer; }
+}
+
+/* ━━━ MOBILE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 767px) {
+  html, button, a { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+  .t-display  { letter-spacing: -0.015em; line-height: 0.9; }
+  .t-headline { line-height: 1.0; }
 }
