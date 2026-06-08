@@ -59,6 +59,23 @@
 
   --ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1);
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Semantic aliases (components reference these --color-* names) ── */
+  --color-surface-base:    var(--bg);
+  --color-surface-raised:  var(--bg-raised);
+  --color-surface-overlay: var(--bg-overlay);
+
+  --color-text-primary:    var(--fg);
+  --color-text-secondary:  var(--fg-sub);
+  --color-text-muted:      var(--fg-muted);
+  --color-text-ghost:      var(--fg-ghost);
+
+  --color-accent:          var(--accent);
+  --color-accent-glow:     var(--accent-glow);
+
+  --color-border-subtle:   var(--border);
+  --color-border-default:  var(--border-mid);
+  --color-border-strong:   var(--border-strong);
 }
 
 /* ━━━ RESET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -193,7 +210,7 @@ button, a, [role="button"] {
   position: fixed;
   top: 0; left: 0;
   pointer-events: none;
-  z-index: 9998;
+  z-index: 10001;
   mix-blend-mode: difference;
 }
 .cursor-dot-inner {
@@ -206,7 +223,7 @@ button, a, [role="button"] {
   position: fixed;
   top: 0; left: 0;
   pointer-events: none;
-  z-index: 9997;
+  z-index: 10000;
 }
 .cursor-ring-inner {
   width: 36px; height: 36px;

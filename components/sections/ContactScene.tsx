@@ -10,7 +10,7 @@ export default function ContactScene() {
       id="contact"
       className="relative w-full min-h-screen flex flex-col overflow-hidden"
       aria-labelledby="contact-heading"
-      style={{ background: "var(--color-surface-base)" }}
+      style={{ background: "var(--bg)" }}
     >
       {/* Background */}
       <div className="absolute inset-0" aria-hidden="true">

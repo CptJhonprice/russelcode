@@ -34,7 +34,7 @@ export default function CapabilitiesScene() {
       id="capabilities"
       className="relative w-full py-32 md:py-48 overflow-hidden"
       aria-labelledby="capabilities-heading"
-      style={{ background: "var(--color-surface-base)" }}
+      style={{ background: "var(--bg)" }}
     >
       <div
         className="absolute top-0 left-0 right-0 h-px"
