@@ -15,8 +15,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sceneLoaded, setSceneLoaded] = useState(false);
   const [ready, setReady]             = useState(false);
 
+  // Lock body scroll while EnterScreen is open
+  useEffect(() => {
+    if (!ready) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [ready]);
+
   useEffect(() => {
     if (ready) {
+      // Always start at top when entering the site
+      window.scrollTo({ top: 0, behavior: "instant" });
       initLenis();
       return () => destroyLenis();
     }
