@@ -11,22 +11,49 @@ const ProcessGL = dynamic(() => import("@/components/three/ProcessGL"), { ssr: f
 gsap.registerPlugin(ScrollTrigger);
 
 const STEPS = [
-  { label: "Idea",      copy: "We shape raw product ideas into clear technical direction." },
-  { label: "Prototype", copy: "We build fast, focused prototypes to validate the core experience." },
-  { label: "Product",   copy: "We turn validated flows into real mobile and web applications." },
-  { label: "Launch",    copy: "We prepare the product for users, stores, analytics, and production." },
-  { label: "Scale",     copy: "We improve architecture, automation, performance, and growth systems." },
+  {
+    label: "Idea",
+    sub: "Discovery & Direction",
+    copy: "We shape raw product ideas into clear technical direction.",
+    detail: "Market research, scope definition, tech stack decisions.",
+  },
+  {
+    label: "Prototype",
+    sub: "Validate Fast",
+    copy: "We build fast, focused prototypes to validate the core experience.",
+    detail: "Interactive wireframes, UX flows, rapid iteration cycles.",
+  },
+  {
+    label: "Product",
+    sub: "Build & Craft",
+    copy: "We turn validated flows into real mobile and web applications.",
+    detail: "Full-stack development, design system, CI/CD pipeline.",
+  },
+  {
+    label: "Launch",
+    sub: "Ship to Users",
+    copy: "We prepare the product for users, stores, analytics, and production.",
+    detail: "App store publishing, monitoring, onboarding, growth hooks.",
+  },
+  {
+    label: "Scale",
+    sub: "Grow & Evolve",
+    copy: "We improve architecture, automation, performance, and growth systems.",
+    detail: "Infra scaling, A/B testing, feature velocity, data pipelines.",
+  },
 ];
 
 export default function ProcessScene() {
-  const outerRef  = useRef<HTMLDivElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
-  const copyRef   = useRef<HTMLParagraphElement>(null);
-  const stepRefs  = useRef<(HTMLDivElement | null)[]>([]);
-  const nodeRef   = useRef<HTMLDivElement>(null);
-  const fillRef   = useRef<HTMLDivElement>(null);
-  const indexRef  = useRef<HTMLSpanElement>(null);
-  const labelRef  = useRef<HTMLSpanElement>(null);
+  const outerRef   = useRef<HTMLDivElement>(null);
+  const stickyRef  = useRef<HTMLDivElement>(null);
+  const copyRef    = useRef<HTMLParagraphElement>(null);
+  const detailRef  = useRef<HTMLSpanElement>(null);
+  const ghostRef   = useRef<HTMLSpanElement>(null);
+  const stepNumRef = useRef<HTMLSpanElement>(null);
+  const stepLblRef = useRef<HTMLSpanElement>(null);
+  const stepSubRef = useRef<HTMLSpanElement>(null);
+  const fillRef    = useRef<HTMLDivElement>(null);
+  const stepRefs   = useRef<(HTMLDivElement | null)[]>([]);
 
   const activeStep = useRef(0);
   const prevStep   = useRef(-1);
@@ -40,48 +67,98 @@ export default function ProcessScene() {
         pin: stickyRef.current,
         scrub: 1.2,
         onUpdate(self) {
-          const p   = self.progress;
-          const raw = p * 5;
-          const idx = Math.min(4, Math.floor(raw));
+          const idx = Math.min(4, Math.floor(self.progress * 5));
           activeStep.current = idx;
 
-          // Move node + fill
-          const pct = (idx / 4) * 100;
-          if (nodeRef.current) nodeRef.current.style.left = `${pct}%`;
-          if (fillRef.current) fillRef.current.style.transform = `scaleX(${pct / 100})`;
+          // Timeline fill
+          if (fillRef.current)
+            fillRef.current.style.transform = `scaleX(${idx / 4})`;
 
-          // Step label styles
+          // Step tab states
           stepRefs.current.forEach((el, i) => {
             if (!el) return;
-            el.style.opacity = i === idx ? "1" : i < idx ? "0.25" : "0.12";
-            const lbl = el.querySelector(".step-lbl") as HTMLElement | null;
-            if (lbl) lbl.style.color = i === idx ? "#dedad4" : "#2a3540";
-            const dot = el.querySelector(".step-dot") as HTMLElement | null;
-            if (dot) {
-              dot.style.backgroundColor = i === idx ? "#3d6b8c" : i < idx ? "#1e2e3a" : "#0f0f12";
-              dot.style.boxShadow = i === idx ? "0 0 10px rgba(61,107,140,0.6)" : "none";
+            const line = el.querySelector(".step-line") as HTMLElement | null;
+            const lbl  = el.querySelector(".step-lbl")  as HTMLElement | null;
+            if (i === idx) {
+              el.style.opacity = "1";
+              if (line) { line.style.background = "#4a82a8"; line.style.opacity = "1"; }
+              if (lbl)    lbl.style.color = "#e2dfd9";
+            } else if (i < idx) {
+              el.style.opacity = "0.3";
+              if (line) { line.style.background = "#1e3040"; line.style.opacity = "0.5"; }
+              if (lbl)    lbl.style.color = "#3d6b8c";
+            } else {
+              el.style.opacity = "0.15";
+              if (line) { line.style.background = "#0f1820"; line.style.opacity = "0.4"; }
+              if (lbl)    lbl.style.color = "#1a2a38";
             }
           });
 
           if (idx !== prevStep.current) {
             prevStep.current = idx;
-            if (indexRef.current) indexRef.current.textContent = `0${idx + 1}`;
-            if (labelRef.current) labelRef.current.textContent = STEPS[idx].label.toUpperCase();
+            const step = STEPS[idx];
 
+            // Ghost number
+            gsap.to(ghostRef.current, {
+              opacity: 0, y: 30, duration: 0.22, ease: "power2.in",
+              onComplete() {
+                if (ghostRef.current) ghostRef.current.textContent = `0${idx + 1}`;
+                gsap.fromTo(ghostRef.current,
+                  { opacity: 0, y: -20 },
+                  { opacity: 1,  y: 0, duration: 0.6, ease: "power3.out" }
+                );
+              },
+            });
+
+            // Step indicator
+            if (stepNumRef.current) stepNumRef.current.textContent = `0${idx + 1}`;
+            gsap.fromTo(stepNumRef.current, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" });
+
+            if (stepLblRef.current) {
+              gsap.to(stepLblRef.current, { opacity: 0, x: -6, duration: 0.18, ease: "power2.in",
+                onComplete() {
+                  stepLblRef.current!.textContent = step.label.toUpperCase();
+                  gsap.fromTo(stepLblRef.current, { opacity: 0, x: 8 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" });
+                }
+              });
+            }
+
+            if (stepSubRef.current) {
+              gsap.to(stepSubRef.current, { opacity: 0, duration: 0.15,
+                onComplete() {
+                  stepSubRef.current!.textContent = step.sub;
+                  gsap.to(stepSubRef.current, { opacity: 1, duration: 0.35, delay: 0.1 });
+                }
+              });
+            }
+
+            // Copy
             if (copyRef.current) {
               gsap.to(copyRef.current, {
-                opacity: 0, y: -16, duration: 0.2, ease: "power2.in",
+                opacity: 0, y: -20, duration: 0.22, ease: "power2.in",
                 onComplete() {
-                  copyRef.current!.textContent = STEPS[idx].copy;
-                  gsap.fromTo(copyRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" });
+                  copyRef.current!.textContent = step.copy;
+                  gsap.fromTo(copyRef.current,
+                    { opacity: 0, y: 28 },
+                    { opacity: 1, y: 0,  duration: 0.6, ease: "power3.out" }
+                  );
                 },
+              });
+            }
+
+            // Detail
+            if (detailRef.current) {
+              gsap.to(detailRef.current, { opacity: 0, duration: 0.2,
+                onComplete() {
+                  detailRef.current!.textContent = step.detail;
+                  gsap.to(detailRef.current, { opacity: 1, duration: 0.4, delay: 0.2 });
+                }
               });
             }
           }
         },
       });
     }, outerRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -90,95 +167,136 @@ export default function ProcessScene() {
       <div
         ref={stickyRef}
         id="process"
-        className="relative w-full h-screen overflow-hidden flex flex-col justify-center"
+        className="relative w-full h-screen overflow-hidden flex flex-col"
       >
-        {/* Dark base */}
-        <div className="absolute inset-0 bg-[#07070a]" />
+        {/* Background */}
+        <div className="absolute inset-0" style={{ background: "#07070a" }} />
 
-        {/* Three.js network graph */}
-        <div className="absolute inset-0 opacity-75">
+        {/* Three.js constellation */}
+        <div className="absolute inset-0" style={{ opacity: 0.6 }}>
           <ProcessGL activeStep={activeStep} />
         </div>
 
-        {/* Vignette */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 130% 130% at 50% 50%, transparent 20%, rgba(7,7,10,0.62) 72%, #07070a 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 40% at 50% 100%, rgba(61,107,140,0.08) 0%, transparent 60%)",
-          }}
-        />
+        {/* Radial vignette */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse 120% 100% at 50% 50%, transparent 30%, rgba(7,7,10,0.7) 75%, #07070a 100%)"
+        }} />
 
-        {/* Top bar */}
+        {/* Accent bottom glow */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse 50% 30% at 50% 110%, rgba(74,130,168,0.07) 0%, transparent 60%)"
+        }} />
+
+        {/* ── Top bar ── */}
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 pt-7">
           <SectionLabel index="//03" title="PROCESS" />
-          <div className="flex items-center gap-2">
-            <span ref={indexRef} className="t-label tabular-nums font-medium" style={{ color: "#3d6b8c", fontSize: "0.7rem" }}>01</span>
-            <div className="w-px h-3 bg-[#1a1a1e]" />
-            <span ref={labelRef} className="t-label" style={{ color: "#1e2a32" }}>IDEA</span>
+          <div className="flex items-center gap-2.5">
+            <span ref={stepNumRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.14em", color: "#4a82a8" }}>01</span>
+            <span style={{ width: 1, height: 12, background: "#1a2a38", display: "inline-block" }} />
+            <span ref={stepLblRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.26em", color: "#2a4a62" }}>IDEA</span>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 px-6 md:px-10 lg:px-20 max-w-[88rem] mx-auto w-full">
-          {/* Timeline */}
-          <div className="relative mb-16">
-            {/* Track */}
-            <div className="absolute top-[5px] left-0 right-0 h-px bg-[#0f0f12]" />
-            {/* Fill */}
-            <div
-              ref={fillRef}
-              className="absolute top-[5px] left-0 h-px origin-left"
-              style={{ right: 0, background: "#3d6b8c", transform: "scaleX(0)" }}
-            />
+        {/* ── Ghost number — large typographic anchor ── */}
+        <div className="absolute right-0 top-0 bottom-0 pointer-events-none flex items-center pr-[6vw] select-none">
+          <span
+            ref={ghostRef}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(12rem, 28vw, 26rem)",
+              fontWeight: 400,
+              lineHeight: 1,
+              color: "#e2dfd9",
+              opacity: 1,
+              letterSpacing: "-0.04em",
+              userSelect: "none",
+            }}
+          >
+            01
+          </span>
+        </div>
 
-            {/* Step dots row */}
-            <div className="relative flex justify-between">
-              {STEPS.map((step, i) => (
-                <div
-                  key={i}
-                  ref={(el) => { stepRefs.current[i] = el; }}
-                  className="flex flex-col items-center gap-3 transition-all duration-350"
-                  style={{ opacity: i === 0 ? 1 : 0.12 }}
-                >
-                  <div
-                    className="step-dot w-[5px] h-[5px] rounded-full transition-all duration-500"
-                    style={{ backgroundColor: i === 0 ? "#3d6b8c" : "#0f0f12" }}
-                  />
-                  <span className="step-lbl t-label transition-colors duration-300" style={{ color: i === 0 ? "#dedad4" : "#2a3540" }}>
-                    {step.label.toUpperCase()}
-                  </span>
-                </div>
-              ))}
-            </div>
+        {/* ── Main content ── */}
+        <div className="relative z-10 flex-1 flex flex-col justify-center px-6 md:px-10 lg:px-20 max-w-[88rem] mx-auto w-full pb-20">
+
+          {/* Step indicator */}
+          <div className="flex items-center gap-4 mb-6">
+            <div style={{ width: 28, height: 1, background: "#4a82a8" }} />
+            <span ref={stepSubRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.3em", color: "#4a82a8" }}>
+              {STEPS[0].sub.toUpperCase()}
+            </span>
           </div>
 
-          {/* Scrubbing node */}
-          <div className="relative h-0 -mt-[66px] mb-16 pointer-events-none">
-            <div
-              ref={nodeRef}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: "0%", top: 5, transition: "left 0.07s linear" }}
-            >
-              <div className="w-[6px] h-[6px] rounded-full bg-[#3d6b8c]" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[18px] h-[18px] rounded-full bg-[#3d6b8c] opacity-10 blur-sm" />
-            </div>
-          </div>
-
-          {/* Copy */}
-          <p ref={copyRef} className="t-scene max-w-2xl" style={{ color: "#dedad4" }}>
+          {/* Copy — the headline */}
+          <p
+            ref={copyRef}
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(1.8rem, 3.8vw, 4.2rem)",
+              fontWeight: 300,
+              letterSpacing: "-0.025em",
+              lineHeight: 1.08,
+              color: "#e2dfd9",
+              maxWidth: "16em",
+            }}
+          >
             {STEPS[0].copy}
           </p>
+
+          {/* Detail line */}
+          <div className="flex items-center gap-3 mt-8">
+            <div style={{ width: 16, height: 1, background: "#1e3a52", flexShrink: 0 }} />
+            <span
+              ref={detailRef}
+              style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#2a5a7c" }}
+            >
+              {STEPS[0].detail}
+            </span>
+          </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-px z-10" style={{ background: "#0d0d10" }} />
+        {/* ── Bottom timeline ── */}
+        <div className="relative z-10 px-6 md:px-10 lg:px-20 max-w-[88rem] mx-auto w-full pb-10">
+          {/* Track */}
+          <div className="relative mb-4" style={{ height: 1, background: "#0d1520" }}>
+            <div
+              ref={fillRef}
+              className="absolute inset-y-0 left-0 right-0 origin-left"
+              style={{ background: "linear-gradient(to right, #1e3a52, #4a82a8)", transform: "scaleX(0)" }}
+            />
+          </div>
+
+          {/* Step labels */}
+          <div className="flex justify-between">
+            {STEPS.map((step, i) => (
+              <div
+                key={i}
+                ref={(el) => { stepRefs.current[i] = el; }}
+                className="flex flex-col items-center gap-2"
+                style={{ opacity: i === 0 ? 1 : 0.15, transition: "opacity 0.4s ease" }}
+              >
+                <div
+                  className="step-line w-px"
+                  style={{ height: 14, background: i === 0 ? "#4a82a8" : "#0f1820", transition: "background 0.4s ease" }}
+                />
+                <span
+                  className="step-lbl"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.5rem",
+                    letterSpacing: "0.22em",
+                    color: i === 0 ? "#e2dfd9" : "#1a2a38",
+                    transition: "color 0.4s ease",
+                  }}
+                >
+                  {step.label.toUpperCase()}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "#0d0d10" }} />
       </div>
     </div>
   );
