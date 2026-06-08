@@ -27,7 +27,7 @@ export default function Ticker({ className = "" }: TickerProps) {
           <span
             key={i}
             className="t-label flex-shrink-0 flex items-center gap-6 px-6"
-            style={{ color: "var(--fg-ghost)" }}
+            style={{ color: "var(--fg)" }}
           >
             {item}
             <span
