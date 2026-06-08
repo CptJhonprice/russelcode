@@ -98,7 +98,7 @@ export default function HeroScene() {
           <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-16">
             <div className="flex items-center gap-4">
               <div style={{ width: 32, height: 1, background: "var(--accent)", flexShrink: 0 }} aria-hidden="true" />
-              <span className="t-label" style={{ color: "var(--accent)" }}>SOFTWARE STUDIO — EST. 2024</span>
+              <span className="t-label" style={{ color: "var(--accent)" }}>SOFTWARE STUDIO — EST. 2026</span>
             </div>
             <p ref={subRef} className="t-body" style={{ maxWidth: "40ch", opacity: 0 }}>
               RussellCode designs and builds AI&#8209;native products,
