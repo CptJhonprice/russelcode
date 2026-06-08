@@ -90,7 +90,7 @@ export default function HeroScene() {
           <h1 id="hero-heading" className="t-display mb-8">
             Software
             <br />
-            <span style={{ color: "var(--fg-muted)" }}>built with</span>
+            <span style={{ color: "rgba(226,223,217,0.38)" }}>built with</span>
             <br />
             reason.
           </h1>
