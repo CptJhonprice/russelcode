@@ -197,8 +197,8 @@ export default function ProcessScene() {
           </div>
         </div>
 
-        {/* ── Ghost number — large typographic anchor ── */}
-        <div className="absolute right-0 top-0 bottom-0 pointer-events-none flex items-center pr-[6vw] select-none">
+        {/* ── Ghost number — large typographic anchor (desktop only) ── */}
+        <div className="hidden md:flex absolute right-0 top-0 bottom-0 pointer-events-none items-center pr-[6vw] select-none">
           <span
             ref={ghostRef}
             style={{
