@@ -32,7 +32,7 @@ export default function ContactScene() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Bir hata oluştu.");
+      if (!res.ok) throw new Error(data.detail ?? data.error ?? "Bir hata oluştu.");
       setStatus("success");
       setName(""); setEmail(""); setMessage("");
     } catch (err: unknown) {

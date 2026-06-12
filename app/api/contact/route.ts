@@ -57,17 +57,22 @@ export async function POST(req: NextRequest) {
   const safeMessage = message.trim().slice(0, 3000);
 
   // ── Send via Resend ────────────────────────────────────────────
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("[contact] RESEND_API_KEY is not set");
+    return NextResponse.json({ error: "Sunucu yapılandırma hatası.", detail: "RESEND_API_KEY missing" }, { status: 500 });
+  }
+
   try {
-    // Lazy init — env var only available at runtime, not build time
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(apiKey);
 
-    // TO: RESEND_TO_EMAIL env var ile override edilebilir.
-    // Domain doğrulaması sonrası "destek@russellcode.com" kullan.
-    // Geçici olarak Resend hesabına kayıtlı gmail adresi kullanılıyor.
-    const toEmail = process.env.RESEND_TO_EMAIL ?? "gunaayozer@gmail.com";
+    // onboarding@resend.dev ile sadece Resend'e kayıtlı adrese gönderilebilir.
+    // Domain doğrulama sonrası: from="noreply@russellcode.com", to="destek@russellcode.com"
+    const toEmail   = process.env.RESEND_TO_EMAIL   ?? "gunaayozer@gmail.com";
+    const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
-    await resend.emails.send({
-      from: "RussellCode İletişim <onboarding@resend.dev>",
+    const result = await resend.emails.send({
+      from: `RussellCode İletişim <${fromEmail}>`,
       to:   toEmail,
       replyTo: safeEmail,
       subject: `Yeni proje talebi — ${safeName}`,
@@ -104,10 +109,18 @@ ${safeMessage}
       `,
     });
 
+    if (result.error) {
+      console.error("[contact] Resend API error:", JSON.stringify(result.error));
+      return NextResponse.json(
+        { error: "Mesaj gönderilemedi.", detail: result.error.message },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error("[contact] Resend error:", msg);
+    console.error("[contact] Resend exception:", msg);
     return NextResponse.json(
       { error: "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.", detail: msg },
       { status: 500 }
