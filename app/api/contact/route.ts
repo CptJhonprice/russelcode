@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Simple in-memory rate limiter (per IP, resets on cold start)
 const rateLimitMap = new Map<string, { count: number; ts: number }>();
-const RATE_WINDOW = 60_000; // 1 minute
-const MAX_PER_WINDOW = 3;
+const RATE_WINDOW = 300_000; // 5 minutes
+const MAX_PER_WINDOW = 5;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
