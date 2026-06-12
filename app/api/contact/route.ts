@@ -60,10 +60,15 @@ export async function POST(req: NextRequest) {
   try {
     // Lazy init — env var only available at runtime, not build time
     const resend = new Resend(process.env.RESEND_API_KEY);
+
+    // TO: RESEND_TO_EMAIL env var ile override edilebilir.
+    // Domain doğrulaması sonrası "destek@russellcode.com" kullan.
+    // Geçici olarak Resend hesabına kayıtlı gmail adresi kullanılıyor.
+    const toEmail = process.env.RESEND_TO_EMAIL ?? "gunaayozer@gmail.com";
+
     await resend.emails.send({
-      // "from" alanı domain doğrulama sonrası noreply@russellcode.com olabilir
       from: "RussellCode İletişim <onboarding@resend.dev>",
-      to:   "destek@russellcode.com",
+      to:   toEmail,
       replyTo: safeEmail,
       subject: `Yeni proje talebi — ${safeName}`,
       html: `
@@ -100,10 +105,11 @@ ${safeMessage}
     });
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("[contact] Resend error:", err);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[contact] Resend error:", msg);
     return NextResponse.json(
-      { error: "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin." },
+      { error: "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.", detail: msg },
       { status: 500 }
     );
   }
