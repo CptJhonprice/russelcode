@@ -1,8 +1,6 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // Simple in-memory rate limiter (per IP, resets on cold start)
 const rateLimitMap = new Map<string, { count: number; ts: number }>();
 const RATE_WINDOW = 60_000; // 1 minute
@@ -60,6 +58,8 @@ export async function POST(req: NextRequest) {
 
   // ── Send via Resend ────────────────────────────────────────────
   try {
+    // Lazy init — env var only available at runtime, not build time
+    const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       // "from" alanı domain doğrulama sonrası noreply@russellcode.com olabilir
       from: "RussellCode İletişim <onboarding@resend.dev>",
