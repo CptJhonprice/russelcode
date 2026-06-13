@@ -80,10 +80,6 @@ function jsonLd(lang: Lang) {
       lang === "tr"
         ? "Yapay zekâ odaklı ürünler, mobil uygulamalar ve ölçeklenebilir yazılım sistemleri geliştiren yazılım stüdyosu."
         : "A software studio building AI-native products, mobile apps and scalable software systems.",
-    makesOffer: {
-      "@type": "Offer",
-      itemOffered: { "@type": "MobileApplication", name: "NesiVar?", url },
-    },
   };
 
   const faq = {
