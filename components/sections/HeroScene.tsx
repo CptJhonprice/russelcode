@@ -64,16 +64,20 @@ export default function HeroScene() {
       aria-labelledby="hero-heading"
     >
       {/* Dark base */}
-      <div className="absolute inset-0" style={{ background: "var(--bg)" }} />
+      <div className="absolute inset-0" style={{ background: "#0d0d14" }} />
+
+      {/* Atmospheric blue glow behind robot */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
+        style={{ background: "radial-gradient(ellipse 70% 60% at 62% 55%, rgba(74,130,168,0.13) 0%, transparent 65%)" }} />
 
       {/* Interactive Spline 3D scene */}
       <div ref={bgRef} className="absolute inset-0">
         <SplineHero />
       </div>
 
-      {/* Subtle vignette to keep overlay text readable */}
+      {/* Vignette — lighter edges so scene breathes */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-        style={{ background: "radial-gradient(ellipse 140% 140% at 50% 50%, transparent 25%, rgba(7,7,9,0.45) 75%, var(--bg) 100%)" }} />
+        style={{ background: "radial-gradient(ellipse 150% 150% at 50% 50%, transparent 35%, rgba(7,7,12,0.32) 72%, #0d0d14 100%)" }} />
 
       {/* ── Top bar ── */}
       <div className="relative z-20 flex items-center justify-between px-6 md:px-10 pt-6 pb-4 pointer-events-none">

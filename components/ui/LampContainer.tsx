@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // Theme constants — keep in sync with globals.css design tokens
-const BG   = "#070709"; // --bg
+const BG   = "#0d0d14"; // --bg
 const LAMP = "#4a82a8"; // --accent
 
 /**

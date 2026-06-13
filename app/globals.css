@@ -39,9 +39,9 @@
 
 /* ━━━ DESIGN TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
-  --bg:            #070709;
-  --bg-raised:     #0c0c10;
-  --bg-overlay:    #111116;
+  --bg:            #0d0d14;
+  --bg-raised:     #111118;
+  --bg-overlay:    #16161e;
   --fg:            #e2dfd9;
   --fg-sub:        #7a7672;
   --fg-muted:      #3a3a42;
