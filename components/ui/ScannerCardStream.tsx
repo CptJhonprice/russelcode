@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -13,19 +13,6 @@ const defaultCardImages = [
   "https://cdn.prod.website-files.com/68789c86c8bc802d61932544/689f20b5bea2f1b07392d936_4.png",
 ];
 
-const ASCII_CHARS =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(){}[]<>;:,._-+=!@#$%^&*|\\/\"'`~?";
-
-function generateCode(width: number, height: number): string {
-  let text = "";
-  for (let i = 0; i < width * height; i++) {
-    text += ASCII_CHARS[Math.floor(Math.random() * ASCII_CHARS.length)];
-  }
-  let out = "";
-  for (let i = 0; i < height; i++) out += text.substring(i * width, (i + 1) * width) + "\n";
-  return out;
-}
-
 type ScannerCardStreamProps = {
   initialSpeed?: number;
   direction?: -1 | 1;
@@ -33,7 +20,6 @@ type ScannerCardStreamProps = {
   repeat?: number;
   cardGap?: number;
   friction?: number;
-  scanEffect?: "clip" | "scramble";
 };
 
 export function ScannerCardStream({
@@ -43,7 +29,6 @@ export function ScannerCardStream({
   repeat = 6,
   cardGap = 40,
   friction = 0.95,
-  scanEffect = "scramble",
 }: ScannerCardStreamProps) {
   const { theme } = useTheme();
   const isLight = theme === "light";
@@ -54,14 +39,12 @@ export function ScannerCardStream({
     return Array.from({ length: total }, (_, i) => ({
       id: i,
       image: cardImages[i % cardImages.length],
-      ascii: generateCode(Math.floor(400 / 6.5), Math.floor(250 / 13)),
     }));
   }, [cardImages, repeat]);
 
   const cardLineRef = useRef<HTMLDivElement>(null);
   const particleCanvasRef = useRef<HTMLCanvasElement>(null);
   const scannerCanvasRef = useRef<HTMLCanvasElement>(null);
-  const originalAscii = useRef(new Map<number, string>());
 
   const state = useRef({
     position: 0,
@@ -80,12 +63,9 @@ export function ScannerCardStream({
     const scannerCanvas = scannerCanvasRef.current;
     if (!cardLine || !particleCanvas || !scannerCanvas) return;
 
-    cards.forEach((c) => originalAscii.current.set(c.id, c.ascii));
-
     const s = state.current;
     s.direction = direction;
     s.velocity = initialSpeed;
-    // Measure the real rendered width so wrap-around works at any card size.
     s.cardLineWidth = cardLine.scrollWidth;
     s.position = cardLine.parentElement?.offsetWidth ?? window.innerWidth;
     s.lastTime = performance.now();
@@ -116,7 +96,6 @@ export function ScannerCardStream({
     const half = 50;
     const grad = texCtx.createRadialGradient(half, half, 0, half, half, half);
     if (isLight) {
-      // Visible accent dots on a light background (normal blending below)
       grad.addColorStop(0.025, "#2f6c93");
       grad.addColorStop(0.1, "rgba(47,108,147,0.7)");
       grad.addColorStop(0.25, "rgba(47,108,147,0.25)");
@@ -178,23 +157,8 @@ export function ScannerCardStream({
     let spray: SP[] = Array.from({ length: baseMax }, makeSP);
     let scanningNow = false;
 
-    // ── ASCII scramble on scan ─────────────────────────────────────
-    const runScramble = (el: HTMLElement) => {
-      if (el.dataset.scrambling === "true") return;
-      el.dataset.scrambling = "true";
-      const original = el.textContent ?? "";
-      let n = 0;
-      const id = setInterval(() => {
-        el.textContent = generateCode(Math.floor(400 / 6.5), Math.floor(250 / 13));
-        if (++n >= 10) {
-          clearInterval(id);
-          el.textContent = original;
-          delete el.dataset.scrambling;
-        }
-      }, 30);
-    };
-
-    const updateCardEffects = () => {
+    // Detect whether a card is currently crossing the centre scanner line
+    const detectScan = () => {
       const scannerX = window.innerWidth / 2;
       const w = 8;
       const left = scannerX - w / 2;
@@ -202,33 +166,13 @@ export function ScannerCardStream({
       let any = false;
       cardLine.querySelectorAll<HTMLElement>(".card-wrapper").forEach((wrapper) => {
         const rect = wrapper.getBoundingClientRect();
-        const normal = wrapper.querySelector<HTMLElement>(".card-normal")!;
-        const ascii = wrapper.querySelector<HTMLElement>(".card-ascii")!;
-        const asciiPre = ascii.querySelector<HTMLElement>("pre")!;
-        if (rect.left < right && rect.right > left) {
-          any = true;
-          if (scanEffect === "scramble" && wrapper.dataset.scanned !== "true") runScramble(asciiPre);
-          wrapper.dataset.scanned = "true";
-          const iLeft = Math.max(left - rect.left, 0);
-          const iRight = Math.min(right - rect.left, rect.width);
-          normal.style.setProperty("--clip-right", `${(iLeft / rect.width) * 100}%`);
-          ascii.style.setProperty("--clip-left", `${(iRight / rect.width) * 100}%`);
-        } else {
-          delete wrapper.dataset.scanned;
-          if (rect.right < left) {
-            normal.style.setProperty("--clip-right", "100%");
-            ascii.style.setProperty("--clip-left", "100%");
-          } else {
-            normal.style.setProperty("--clip-right", "0%");
-            ascii.style.setProperty("--clip-left", "0%");
-          }
-        }
+        if (rect.left < right && rect.right > left) any = true;
       });
       scanningNow = any;
       setIsScanning(any);
     };
 
-    // ── Pointer / touch / wheel interaction ────────────────────────
+    // ── Pointer / touch interaction ────────────────────────────────
     const getX = (e: MouseEvent | TouchEvent) =>
       "touches" in e ? e.touches[0]?.clientX ?? s.lastX : e.clientX;
 
@@ -287,7 +231,7 @@ export function ScannerCardStream({
       else if (s.position > containerW) s.position = -s.cardLineWidth;
       cardLine.style.transform = `translateX(${s.position}px)`;
 
-      updateCardEffects();
+      detectScan();
 
       // particles
       const t = now * 0.001;
@@ -338,7 +282,7 @@ export function ScannerCardStream({
       texture.dispose();
       renderer.dispose();
     };
-  }, [cards, cardGap, direction, friction, initialSpeed, scanEffect, isLight]);
+  }, [cards, cardGap, direction, friction, initialSpeed, isLight]);
 
   return (
     <section
@@ -349,17 +293,6 @@ export function ScannerCardStream({
       {/* Top / bottom hairlines tie it into the page rhythm */}
       <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--color-border-subtle)" }} />
       <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "var(--color-border-subtle)" }} />
-
-      {/* Label */}
-      <div className="px-6 md:px-10 mb-8 md:mb-12 flex items-center gap-3">
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.2em", color: "#4a82a8" }}>
-          //GALLERY
-        </span>
-        <span style={{ width: 28, height: 1, background: "#1e3a52", display: "block" }} />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.24em", color: "#3d6b8c" }}>
-          SCANNED IN MOTION
-        </span>
-      </div>
 
       {/* Stream stage */}
       <div className="relative w-full h-[170px] md:h-[250px] flex items-center">
@@ -395,25 +328,14 @@ export function ScannerCardStream({
               key={card.id}
               className="card-wrapper relative w-[260px] h-[163px] md:w-[400px] md:h-[250px] shrink-0"
             >
-              <div className="card-normal absolute inset-0 rounded-[15px] overflow-hidden z-[2] [clip-path:inset(0_0_0_var(--clip-right,0%))]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={card.image}
-                  alt="Showcase card"
-                  draggable={false}
-                  className="w-full h-full object-cover rounded-[15px] brightness-110 contrast-110"
-                  style={{ boxShadow: isLight ? "0 12px 32px rgba(20,40,60,0.18)" : "0 15px 40px rgba(0,0,0,0.4)" }}
-                />
-              </div>
-              <div className="card-ascii absolute inset-0 rounded-[15px] overflow-hidden z-[1] [clip-path:inset(0_calc(100%-var(--clip-left,0%))_0_0)]">
-                <pre
-                  suppressHydrationWarning
-                  className="absolute inset-0 w-full h-full font-mono text-[11px] leading-[13px] overflow-hidden whitespace-pre m-0 p-0 text-left box-border animate-glitch [mask-image:linear-gradient(to_right,rgba(0,0,0,1)_0%,rgba(0,0,0,0.6)_50%,rgba(0,0,0,0.2)_100%)]"
-                  style={{ color: isLight ? "rgba(40,82,112,0.55)" : "rgba(150,190,225,0.6)" }}
-                >
-                  {card.ascii}
-                </pre>
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={card.image}
+                alt="Showcase card"
+                draggable={false}
+                className="w-full h-full object-cover rounded-[15px] brightness-110 contrast-110"
+                style={{ boxShadow: isLight ? "0 12px 32px rgba(20,40,60,0.18)" : "0 15px 40px rgba(0,0,0,0.4)" }}
+              />
             </div>
           ))}
         </div>
