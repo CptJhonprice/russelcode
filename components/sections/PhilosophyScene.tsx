@@ -56,7 +56,7 @@ export default function PhilosophyScene() {
             dotRefs.current.forEach((dot, i) => {
               if (!dot) return;
               dot.style.height = i === idx ? "20px" : i < idx ? "5px" : "3px";
-              dot.style.backgroundColor = i === idx ? "#3d6b8c" : i < idx ? "#1e2e3a" : "#0f0f12";
+              dot.style.backgroundColor = i === idx ? "#3d6b8c" : i < idx ? "var(--border-strong)" : "var(--border-mid)";
               dot.style.boxShadow = i === idx ? "0 0 10px rgba(61,107,140,0.55)" : "none";
             });
 
@@ -101,7 +101,7 @@ export default function PhilosophyScene() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 120% 120% at 50% 50%, transparent 25%, rgba(7,7,10,0.6) 70%, #07070a 100%)",
+              "radial-gradient(ellipse 120% 120% at 50% 50%, transparent 25%, rgba(var(--vignette-rgb),0.6) 70%, var(--bg) 100%)",
           }}
         />
         {/* Bottom glow */}
@@ -116,14 +116,14 @@ export default function PhilosophyScene() {
         {/* Top bar */}
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 pt-7">
           <SectionLabel index="//02" title="PHILOSOPHY" />
-          <span ref={numRef} className="t-label tabular-nums" style={{ color: "#1e2e3a" }}>
+          <span ref={numRef} className="t-label tabular-nums" style={{ color: "var(--fg-ghost)" }}>
             01 / 04
           </span>
         </div>
 
         {/* Right progress rail */}
         <div className="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-2">
-          <div className="relative w-px bg-[#0f0f12]" style={{ height: 100 }}>
+          <div className="relative w-px bg-[var(--border-mid)]" style={{ height: 100 }}>
             <div
               ref={lineRef}
               className="absolute inset-0 origin-top"
@@ -135,7 +135,7 @@ export default function PhilosophyScene() {
               key={i}
               ref={(el) => { dotRefs.current[i] = el; }}
               className="w-[2px] rounded-full transition-all duration-500"
-              style={{ height: i === 0 ? 20 : 3, backgroundColor: i === 0 ? "#3d6b8c" : "#0f0f12" }}
+              style={{ height: i === 0 ? 20 : 3, backgroundColor: i === 0 ? "#3d6b8c" : "var(--border-mid)" }}
             />
           ))}
         </div>
@@ -148,7 +148,7 @@ export default function PhilosophyScene() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-px z-10" style={{ background: "#0d0d10" }} />
+        <div className="absolute bottom-0 left-0 right-0 h-px z-10" style={{ background: "var(--border)" }} />
       </div>
     </div>
   );

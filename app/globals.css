@@ -53,6 +53,9 @@
   --border-mid:    #181820;
   --border-strong: #242430;
 
+  /* RGB triplet used by vignette/scrim gradients so they flip per theme */
+  --vignette-rgb:  7, 7, 12;
+
   --font-display: "Gloock", "Georgia", serif;
   --font-body:    "InstrumentSans", "Inter", system-ui, sans-serif;
   --font-mono:    "JetBrainsMono", "Fira Code", monospace;
@@ -76,6 +79,26 @@
   --color-border-subtle:   var(--border);
   --color-border-default:  var(--border-mid);
   --color-border-strong:   var(--border-strong);
+}
+
+/* ━━━ LIGHT THEME OVERRIDES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+html[data-theme="light"] {
+  --bg:            #eef1f5;
+  --bg-raised:     #ffffff;
+  --bg-overlay:    #e4e8ed;
+  --fg:            #14171e;
+  --fg-sub:        #565b64;
+  --fg-muted:      #aab0b9;
+  --fg-ghost:      #dde1e7;
+  --accent:        #2f6c93;
+  --accent-dim:    #cfe0ec;
+  --accent-glow:   rgba(47, 108, 147, 0.16);
+  --border:        #e3e6ec;
+  --border-mid:    #d2d6dd;
+  --border-strong: #bfc4cd;
+
+  /* Vignettes/scrims fade to the light bg instead of black */
+  --vignette-rgb:  238, 241, 245;
 }
 
 /* ━━━ RESET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -204,6 +227,20 @@ button, a, [role="button"] {
   50%  { transform: translateY(0); }
   100% { transform: translateY(100%); }
 }
+
+/* ━━━ SCANNER CARD STREAM ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes glitch {
+  0%, 16%, 50%, 100% { opacity: 1; }
+  15%, 99% { opacity: 0.9; }
+  49% { opacity: 0.8; }
+}
+.animate-glitch { animation: glitch 0.1s infinite linear alternate-reverse; }
+
+@keyframes scanPulse {
+  0%   { opacity: 0.75; transform: translate(-50%, -50%) scaleY(1); }
+  100% { opacity: 1;    transform: translate(-50%, -50%) scaleY(1.03); }
+}
+.animate-scan-pulse { animation: scanPulse 1.5s infinite alternate ease-in-out; }
 
 /* ━━━ CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .cursor-dot {

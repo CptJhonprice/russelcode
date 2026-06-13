@@ -5,6 +5,7 @@ import PhilosophyScene from "@/components/sections/PhilosophyScene";
 import ProcessScene from "@/components/sections/ProcessScene";
 import ProductsScene from "@/components/sections/ProductsScene";
 import CapabilitiesScene from "@/components/sections/CapabilitiesScene";
+import ScannerCardStream from "@/components/ui/ScannerCardStream";
 import ContactScene from "@/components/sections/ContactScene";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <ProductsScene />
       <CapabilitiesScene />
       <ContactScene />
+      <ScannerCardStream />
     </Layout>
   );
 }

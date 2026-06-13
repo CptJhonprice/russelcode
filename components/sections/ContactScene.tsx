@@ -45,7 +45,7 @@ export default function ContactScene() {
     width: "100%",
     background: "transparent",
     border: "none",
-    borderBottom: "1px solid var(--color-border-default)",
+    borderBottom: "1px solid var(--color-border-strong)",
     color: "var(--fg)",
     fontFamily: "var(--font-body)",
     fontSize: "0.95rem",
@@ -68,7 +68,7 @@ export default function ContactScene() {
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse 80% 60% at 50% 100%, var(--color-accent-glow) 0%, transparent 65%)" }} />
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 130% 130% at 50% 50%, transparent 30%, rgba(0,0,0,0.5) 100%)" }} />
+          style={{ background: "radial-gradient(ellipse 130% 130% at 50% 50%, transparent 30%, rgba(var(--vignette-rgb),0.5) 100%)" }} />
       </div>
 
       <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--color-border-subtle)" }} aria-hidden="true" />
@@ -125,7 +125,7 @@ export default function ContactScene() {
             <div className="flex flex-col gap-8 mb-10">
               {/* Name */}
               <div className="relative">
-                <label className="t-label block mb-2" style={{ color: "var(--color-border-strong)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
+                <label className="t-label block mb-2" style={{ color: "var(--fg-sub)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
                   İSİM
                 </label>
                 <input
@@ -137,13 +137,13 @@ export default function ContactScene() {
                   placeholder="Adınız Soyadınız"
                   style={{ ...inputStyle, cursor: "none" }}
                   onFocus={e => (e.currentTarget.style.borderBottomColor = "#4a82a8")}
-                  onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-default)")}
+                  onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-strong)")}
                 />
               </div>
 
               {/* Email */}
               <div className="relative">
-                <label className="t-label block mb-2" style={{ color: "var(--color-border-strong)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
+                <label className="t-label block mb-2" style={{ color: "var(--fg-sub)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
                   E-POSTA
                 </label>
                 <input
@@ -154,13 +154,13 @@ export default function ContactScene() {
                   placeholder="ornek@sirket.com"
                   style={{ ...inputStyle, cursor: "none" }}
                   onFocus={e => (e.currentTarget.style.borderBottomColor = "#4a82a8")}
-                  onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-default)")}
+                  onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-strong)")}
                 />
               </div>
 
               {/* Message */}
               <div className="relative">
-                <label className="t-label block mb-2" style={{ color: "var(--color-border-strong)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
+                <label className="t-label block mb-2" style={{ color: "var(--fg-sub)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
                   MESAJ
                 </label>
                 <textarea
@@ -172,7 +172,7 @@ export default function ContactScene() {
                   placeholder="Projenizi kısaca anlatın..."
                   style={{ ...inputStyle, resize: "none", cursor: "none" }}
                   onFocus={e => (e.currentTarget.style.borderBottomColor = "#4a82a8")}
-                  onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-default)")}
+                  onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-strong)")}
                 />
               </div>
             </div>
@@ -183,7 +183,7 @@ export default function ContactScene() {
               disabled={status === "sending"}
               className="group w-full flex items-center justify-center gap-4 min-h-[52px] t-label transition-colors"
               style={{
-                border: "1px solid var(--color-border-default)",
+                border: "1px solid var(--color-border-strong)",
                 color: status === "sending" ? "var(--color-border-strong)" : "var(--fg)",
                 fontSize: "0.6rem",
                 letterSpacing: "0.22em",
@@ -192,7 +192,7 @@ export default function ContactScene() {
                 transition: "border-color 0.2s ease, color 0.2s ease",
               }}
               onMouseEnter={e => { if (status !== "sending") (e.currentTarget as HTMLButtonElement).style.borderColor = "#4a82a8"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--color-border-default)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--color-border-strong)"; }}
             >
               {status === "sending" ? "GÖNDERİLİYOR..." : "PROJEYİ BAŞLAT"}
               {status !== "sending" && (

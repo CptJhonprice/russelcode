@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import dynamic from "next/dynamic";
 
-const EnterGL = dynamic(() => import("@/components/three/EnterGL"), { ssr: false });
+const NeuralNoise = dynamic(() => import("@/components/three/NeuralNoise"), { ssr: false });
 
 interface EnterScreenProps {
   sceneLoaded: boolean;
@@ -112,10 +112,10 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
     <div
       ref={containerRef}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden select-none"
-      style={{ background: "#070709" }}
+      style={{ background: "#ffffff" }}
     >
-      {/* Three.js constellation */}
-      <EnterGL />
+      {/* WebGL neural-link field — blue lines on white */}
+      <NeuralNoise color={[0.29, 0.51, 0.66]} />
 
       {/* Corner accents */}
       <div
@@ -126,11 +126,11 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
           transition: "opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s",
         }}
       >
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.28em", color: "#2a5a7c" }}>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.28em", color: "#1a3a52" }}>
           RC
         </span>
-        <span style={{ width: 24, height: 1, background: "#1a3a50", display: "block" }} />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.2em", color: "#1e3040" }}>
+        <span style={{ width: 24, height: 1, background: "#7da3bf", display: "block" }} />
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.2em", color: "#3a6483" }}>
           STUDIO
         </span>
       </div>
@@ -142,7 +142,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
           transition: "opacity 0.7s ease 0.2s",
         }}
       >
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.22em", color: "#1e3040" }}>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.22em", color: "#3a6483" }}>
           2026
         </span>
       </div>
@@ -164,7 +164,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
               fontWeight: 400,
               letterSpacing: "-0.02em",
               lineHeight: 1,
-              color: "#e2dfd9",
+              color: "#0d1f33",
               textAlign: "center",
             }}
           >
@@ -183,11 +183,11 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
         >
           {/* Animated separator */}
           <div className="flex items-center gap-4">
-            <span style={{ width: "clamp(40px, 6vw, 80px)", height: 1, background: "linear-gradient(to right, transparent, #2a5a7c)" }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.44rem", letterSpacing: "0.3em", color: "#2a5a7c" }}>◆</span>
-            <span style={{ width: "clamp(40px, 6vw, 80px)", height: 1, background: "linear-gradient(to left, transparent, #2a5a7c)" }} />
+            <span style={{ width: "clamp(40px, 6vw, 80px)", height: 1, background: "linear-gradient(to right, transparent, #4a82a8)" }} />
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.44rem", letterSpacing: "0.3em", color: "#4a82a8" }}>◆</span>
+            <span style={{ width: "clamp(40px, 6vw, 80px)", height: 1, background: "linear-gradient(to left, transparent, #4a82a8)" }} />
           </div>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.32em", color: "#3d6b8c" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.32em", color: "#3a6483" }}>
             SOFTWARE STUDIO
           </span>
         </div>
@@ -279,7 +279,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
                   fontFamily: "var(--font-mono)",
                   fontSize: "0.52rem",
                   letterSpacing: "0.3em",
-                  color: "#e2dfd9",
+                  color: "#0d1f33",
                   marginTop: 20,
                 }}
               >
@@ -327,7 +327,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
           transition: "opacity 0.8s ease 1.1s, transform 0.8s ease 1.1s",
         }}
       >
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.44rem", letterSpacing: "0.28em", color: "#1a2e3d" }}>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.44rem", letterSpacing: "0.28em", color: "#3a6483" }}>
           SOFTWARE BUILT WITH REASON.
         </span>
       </div>

@@ -4,9 +4,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// Theme constants — keep in sync with globals.css design tokens
-const BG   = "#0d0d14"; // --bg
-const LAMP = "#4a82a8"; // --accent
+// Theme tokens — flip automatically with the light/dark theme
+const BG   = "var(--bg)";     // --bg
+const LAMP = "var(--accent)"; // --accent
 
 /**
  * Lamp reveal effect (adapted from Aceternity UI for Tailwind v4 + RussellCode theme).

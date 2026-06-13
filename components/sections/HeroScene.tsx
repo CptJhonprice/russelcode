@@ -63,8 +63,8 @@ export default function HeroScene() {
       className="relative w-full h-screen overflow-hidden flex flex-col"
       aria-labelledby="hero-heading"
     >
-      {/* Dark base */}
-      <div className="absolute inset-0" style={{ background: "#0d0d14" }} />
+      {/* Theme base — flips white in light theme so the robot sits on white */}
+      <div className="absolute inset-0" style={{ background: "var(--bg)" }} />
 
       {/* Atmospheric blue glow behind robot */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
@@ -77,7 +77,7 @@ export default function HeroScene() {
 
       {/* Vignette — lighter edges so scene breathes */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-        style={{ background: "radial-gradient(ellipse 150% 150% at 50% 50%, transparent 35%, rgba(7,7,12,0.32) 72%, #0d0d14 100%)" }} />
+        style={{ background: "radial-gradient(ellipse 150% 150% at 50% 50%, transparent 35%, rgba(var(--vignette-rgb),0.32) 72%, var(--bg) 100%)" }} />
 
       {/* ── Top bar ── */}
       <div className="relative z-20 flex items-center justify-between px-6 md:px-10 pt-6 pb-4 pointer-events-none">

@@ -82,15 +82,15 @@ export default function ProcessScene() {
             if (i === idx) {
               el.style.opacity = "1";
               if (line) { line.style.background = "#4a82a8"; line.style.opacity = "1"; }
-              if (lbl)    lbl.style.color = "#e2dfd9";
+              if (lbl)    lbl.style.color = "var(--fg)";
             } else if (i < idx) {
               el.style.opacity = "0.3";
-              if (line) { line.style.background = "#1e3040"; line.style.opacity = "0.5"; }
-              if (lbl)    lbl.style.color = "#3d6b8c";
+              if (line) { line.style.background = "var(--border-strong)"; line.style.opacity = "0.5"; }
+              if (lbl)    lbl.style.color = "var(--fg-sub)";
             } else {
               el.style.opacity = "0.15";
-              if (line) { line.style.background = "#0f1820"; line.style.opacity = "0.4"; }
-              if (lbl)    lbl.style.color = "#1a2a38";
+              if (line) { line.style.background = "var(--border-mid)"; line.style.opacity = "0.4"; }
+              if (lbl)    lbl.style.color = "var(--fg-muted)";
             }
           });
 
@@ -170,7 +170,7 @@ export default function ProcessScene() {
         className="relative w-full h-screen overflow-hidden flex flex-col"
       >
         {/* Background */}
-        <div className="absolute inset-0" style={{ background: "#07070a" }} />
+        <div className="absolute inset-0" style={{ background: "var(--bg)" }} />
 
         {/* Three.js constellation */}
         <div className="absolute inset-0" style={{ opacity: 0.6 }}>
@@ -179,7 +179,7 @@ export default function ProcessScene() {
 
         {/* Radial vignette */}
         <div className="absolute inset-0 pointer-events-none" style={{
-          background: "radial-gradient(ellipse 120% 100% at 50% 50%, transparent 30%, rgba(7,7,10,0.7) 75%, #07070a 100%)"
+          background: "radial-gradient(ellipse 120% 100% at 50% 50%, transparent 30%, rgba(var(--vignette-rgb),0.7) 75%, var(--bg) 100%)"
         }} />
 
         {/* Accent bottom glow */}
@@ -192,7 +192,7 @@ export default function ProcessScene() {
           <SectionLabel index="//03" title="PROCESS" />
           <div className="flex items-center gap-2.5">
             <span ref={stepNumRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.14em", color: "#4a82a8" }}>01</span>
-            <span style={{ width: 1, height: 12, background: "#1a2a38", display: "inline-block" }} />
+            <span style={{ width: 1, height: 12, background: "var(--border-strong)", display: "inline-block" }} />
             <span ref={stepLblRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.26em", color: "#2a4a62" }}>IDEA</span>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function ProcessScene() {
               fontSize: "clamp(4.5rem, 25vw, 28rem)",
               fontWeight: 400,
               lineHeight: 1,
-              color: "#e2dfd9",
+              color: "var(--fg)",
               opacity: 1,
               letterSpacing: "-0.04em",
               userSelect: "none",
@@ -236,7 +236,7 @@ export default function ProcessScene() {
               fontWeight: 300,
               letterSpacing: "-0.025em",
               lineHeight: 1.08,
-              color: "#e2dfd9",
+              color: "var(--fg)",
               maxWidth: "16em",
             }}
           >
@@ -258,7 +258,7 @@ export default function ProcessScene() {
         {/* ── Bottom timeline ── */}
         <div className="relative z-10 px-6 md:px-10 lg:px-20 max-w-[88rem] mx-auto w-full pb-10">
           {/* Track */}
-          <div className="relative mb-4" style={{ height: 1, background: "#0d1520" }}>
+          <div className="relative mb-4" style={{ height: 1, background: "var(--border-mid)" }}>
             <div
               ref={fillRef}
               className="absolute inset-y-0 left-0 right-0 origin-left"
@@ -277,7 +277,7 @@ export default function ProcessScene() {
               >
                 <div
                   className="step-line w-px"
-                  style={{ height: 14, background: i === 0 ? "#4a82a8" : "#0f1820", transition: "background 0.4s ease" }}
+                  style={{ height: 14, background: i === 0 ? "#4a82a8" : "var(--border-mid)", transition: "background 0.4s ease" }}
                 />
                 <span
                   className="step-lbl"
@@ -285,7 +285,7 @@ export default function ProcessScene() {
                     fontFamily: "var(--font-mono)",
                     fontSize: "clamp(0.34rem, 0.9vw, 0.5rem)",
                     letterSpacing: "0.12em",
-                    color: i === 0 ? "#e2dfd9" : "#1a2a38",
+                    color: i === 0 ? "var(--fg)" : "var(--fg-muted)",
                     transition: "color 0.4s ease",
                   }}
                 >
@@ -296,7 +296,7 @@ export default function ProcessScene() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "#0d0d10" }} />
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "var(--border)" }} />
       </div>
     </div>
   );
