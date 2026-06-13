@@ -9,11 +9,11 @@ import { useLanguage } from "@/context/LanguageContext";
 const AmbientField = dynamic(() => import("@/components/three/AmbientField"), { ssr: false });
 
 // Brand names are not translated
-const PRODUCT_NAMES = ["NesiVar", "Raftan", "WisePlates"];
+const PRODUCT_NAMES = ["NesiVar?", "Raftan", "WisePlates"];
 
 // Internal landing pages for products that have one (per language)
 const PRODUCT_HREFS: Record<string, { tr: string; en: string }> = {
-  NesiVar: { tr: "/nesivar", en: "/en/nesivar" },
+  "NesiVar?": { tr: "/nesivar", en: "/en/nesivar" },
 };
 
 export default function ProductsScene() {

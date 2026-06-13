@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────
-// NesiVar — bilingual content source for the GEO landing pages.
+// NesiVar? — bilingual content source for the GEO landing pages.
 // Both /nesivar (TR) and /en/nesivar (EN) render from this single file so the
 // copy, FAQ, and structured data stay in sync. Plain text only — the page
 // component is responsible for markup. Edit facts here, not in the JSX.
@@ -71,19 +71,19 @@ export interface NesivarCopy {
 export const CONTENT: Record<Lang, NesivarCopy> = {
   tr: {
     locale: "tr_TR",
-    metaTitle: "NesiVar — Yapay Zekâ Destekli OBD-II Araç Analiz Uygulaması",
+    metaTitle: "NesiVar? — Yapay Zekâ Destekli OBD-II Araç Analiz Uygulaması",
     metaDescription:
-      "NesiVar, ikinci el araç alırken doğru kararı vermen için aracın ECU verilerini OBD-II ile okuyup yapay zekâ ile yorumlayan iOS uygulamasıdır. Güven skoru, hata kodları, kronik sorunlar ve sade Türkçe rapor.",
+      "NesiVar?, ikinci el araç alırken doğru kararı vermen için aracın ECU verilerini OBD-II ile okuyup yapay zekâ ile yorumlayan iOS uygulamasıdır. Güven skoru, hata kodları, kronik sorunlar ve sade Türkçe rapor.",
     tagline: "AKILLI ARAÇ ANALİZİ · iOS",
-    h1: "NesiVar — Satın almadan önce aracın gerçeğini bil",
+    h1: "NesiVar? — Satın almadan önce aracın gerçeğini bil",
     heroLead:
-      "NesiVar, ikinci el araç alırken doğru kararı vermen için geliştirilmiş bir OBD-II analiz uygulamasıdır. Aracın beyninden (ECU) gelen gerçek verileri okur, yapay zekâ ile yorumlar ve sade bir Türkçe rapor sunar. Galericinin ya da satıcının sözüne değil, aracın kendi verisine bakarsın.",
+      "NesiVar?, ikinci el araç alırken doğru kararı vermen için geliştirilmiş bir OBD-II analiz uygulamasıdır. Aracın beyninden (ECU) gelen gerçek verileri okur, yapay zekâ ile yorumlar ve sade bir Türkçe rapor sunar. Galericinin ya da satıcının sözüne değil, aracın kendi verisine bakarsın.",
     ctaStore: "App Store'dan indir",
     ctaStudio: "Geliştiren: RussellCode",
 
-    whatTitle: "NesiVar nedir?",
+    whatTitle: "NesiVar? nedir?",
     whatBody:
-      "NesiVar, ikinci el araç alım sürecinde bağımsız bir ön kontrol aracıdır. Vgate iCar Pro V2.1 BLE adaptörüyle aracın OBD-II portuna bağlanır, motor, yakıt, egzoz ve sensör verilerini okur ve yapay zekâ ile yorumlayarak anlaşılır bir Türkçe rapora dönüştürür. Adaptörün yoksa, sadece marka/model/yıl girerek o araca özgü bilinen kronik sorunları görebileceğin bir ön değerlendirme modu da vardır.",
+      "NesiVar?, ikinci el araç alım sürecinde bağımsız bir ön kontrol aracıdır. Vgate iCar Pro V2.1 BLE adaptörüyle aracın OBD-II portuna bağlanır, motor, yakıt, egzoz ve sensör verilerini okur ve yapay zekâ ile yorumlayarak anlaşılır bir Türkçe rapora dönüştürür. Adaptörün yoksa, sadece marka/model/yıl girerek o araca özgü bilinen kronik sorunları görebileceğin bir ön değerlendirme modu da vardır.",
 
     howTitle: "Nasıl çalışır?",
     steps: [
@@ -93,7 +93,7 @@ export const CONTENT: Record<Lang, NesivarCopy> = {
       { title: "Raporu al", body: "Yapay zekâ destekli güven skorunu ve detaylı analizi gör." },
     ],
 
-    givesTitle: "NesiVar ne veriyor?",
+    givesTitle: "NesiVar? ne veriyor?",
     features: [
       { title: "Güven Skoru", body: "Aracın genel durumunu tek bakışta gösteren puan." },
       { title: "Hata kodları (DTC)", body: "Gizlenmiş veya silinmiş arıza izlerini ortaya çıkarır." },
@@ -132,19 +132,19 @@ export const CONTENT: Record<Lang, NesivarCopy> = {
     faqTitle: "Sıkça sorulan sorular",
     faq: [
       {
-        q: "NesiVar nedir?",
-        a: "NesiVar, ikinci el araç alırken doğru kararı vermen için aracın ECU verilerini OBD-II üzerinden okuyup yapay zekâ ile yorumlayan bir iOS uygulamasıdır. Sonucu sade bir Türkçe raporla ve güven skoruyla sunar.",
+        q: "NesiVar? nedir?",
+        a: "NesiVar?, ikinci el araç alırken doğru kararı vermen için aracın ECU verilerini OBD-II üzerinden okuyup yapay zekâ ile yorumlayan bir iOS uygulamasıdır. Sonucu sade bir Türkçe raporla ve güven skoruyla sunar.",
       },
       {
-        q: "NesiVar nasıl çalışır?",
+        q: "NesiVar? nasıl çalışır?",
         a: "Vgate iCar Pro V2.1 BLE adaptörünü aracın OBD-II portuna takarsın, uygulamayı Bluetooth ile bağlarsın, taramayı başlatırsın ve yapay zekâ destekli güven skoru ile detaylı analizi alırsın.",
       },
       {
-        q: "NesiVar ücretsiz mi?",
+        q: "NesiVar? ücretsiz mi?",
         a: "Uygulama App Store'dan ücretsiz indirilir ve uygulama içi satın alma (in-app purchase) içerir. Bazı analiz ve tarama özellikleri uygulama içi satın alma ile kullanılır.",
       },
       {
-        q: "NesiVar kullanmak için hangi cihaz gerekiyor?",
+        q: "NesiVar? kullanmak için hangi cihaz gerekiyor?",
         a: "OBD-II ile tam tarama için Vgate iCar Pro V2.1 BLE OBD-II adaptörü ve Bluetooth özellikli bir iPhone gerekir. Araç OBD-II / SAE J1979 destekli olmalıdır (genelde 2004 ve sonrası modeller).",
       },
       {
@@ -152,42 +152,42 @@ export const CONTENT: Record<Lang, NesivarCopy> = {
         a: "Evet. Adaptörsüz 'ön değerlendirme' modunda sadece marka, model, yıl ve yakıt tipini girersin; uygulama o araca özgü bilinen kronik sorunları ve dikkat edilmesi gereken noktaları listeler.",
       },
       {
-        q: "NesiVar gizlenmiş arızaları gösterir mi?",
+        q: "NesiVar? gizlenmiş arızaları gösterir mi?",
         a: "Uygulama hata kodlarını (DTC) okur ve gizlenmiş veya silinmiş arıza izlerini değerlendirir. Yanıt vermeyen sensörleri de bir sinyal olarak ele alıp gizlemeden raporuna katar.",
       },
       {
-        q: "NesiVar ekspertizin yerine geçer mi?",
-        a: "Hayır. NesiVar profesyonel bir ekspertiz veya mekanik muayenenin yerini tutmaz. Sunulan güven skoru ve analizler bilgilendirme amaçlıdır; nihai satın alma kararı için yetkili bir uzmana danışman önerilir.",
+        q: "NesiVar? ekspertizin yerine geçer mi?",
+        a: "Hayır. NesiVar? profesyonel bir ekspertiz veya mekanik muayenenin yerini tutmaz. Sunulan güven skoru ve analizler bilgilendirme amaçlıdır; nihai satın alma kararı için yetkili bir uzmana danışman önerilir.",
       },
       {
         q: "NesiVar'ı kim geliştirdi?",
-        a: "NesiVar, yapay zekâ odaklı ürünler geliştiren yazılım stüdyosu RussellCode tarafından geliştirilmiştir.",
+        a: "NesiVar?, yapay zekâ odaklı ürünler geliştiren yazılım stüdyosu RussellCode tarafından geliştirilmiştir.",
       },
     ],
 
     disclaimerTitle: "Önemli not",
     disclaimerBody:
-      "NesiVar, profesyonel bir ekspertiz veya mekanik muayenenin yerini tutmaz. Sunulan güven skoru ve analizler bilgilendirme amaçlıdır ve yol gösterici niteliktedir; nihai satın alma kararı ve detaylı kontrol için yetkili bir uzmana danışmanız önerilir.",
+      "NesiVar?, profesyonel bir ekspertiz veya mekanik muayenenin yerini tutmaz. Sunulan güven skoru ve analizler bilgilendirme amaçlıdır ve yol gösterici niteliktedir; nihai satın alma kararı ve detaylı kontrol için yetkili bir uzmana danışmanız önerilir.",
 
-    footerNote: "NesiVar bir RussellCode ürünüdür.",
+    footerNote: "NesiVar? bir RussellCode ürünüdür.",
     backToStudio: "russellcode.com'a dön",
   },
 
   en: {
     locale: "en_US",
-    metaTitle: "NesiVar — AI-Powered OBD-II Car Analysis App",
+    metaTitle: "NesiVar? — AI-Powered OBD-II Car Analysis App",
     metaDescription:
-      "NesiVar is an iOS app that reads your car's real ECU data over OBD-II and interprets it with AI, so you can make the right decision before buying a used car. Confidence score, fault codes, known chronic issues and a clear report.",
+      "NesiVar? is an iOS app that reads your car's real ECU data over OBD-II and interprets it with AI, so you can make the right decision before buying a used car. Confidence score, fault codes, known chronic issues and a clear report.",
     tagline: "SMART VEHICLE ANALYSIS · iOS",
-    h1: "NesiVar — Know the truth about a car before you buy",
+    h1: "NesiVar? — Know the truth about a car before you buy",
     heroLead:
-      "NesiVar is an OBD-II analysis app built to help you make the right decision when buying a used car. It reads the real data from the car's brain (ECU), interprets it with AI, and gives you a clear report. Instead of trusting the dealer's or seller's word, you look at the car's own data.",
+      "NesiVar? is an OBD-II analysis app built to help you make the right decision when buying a used car. It reads the real data from the car's brain (ECU), interprets it with AI, and gives you a clear report. Instead of trusting the dealer's or seller's word, you look at the car's own data.",
     ctaStore: "Download on the App Store",
     ctaStudio: "Built by RussellCode",
 
     whatTitle: "What is NesiVar?",
     whatBody:
-      "NesiVar is an independent pre-purchase inspection tool for used cars. Using a Vgate iCar Pro V2.1 BLE adapter, it connects to the car's OBD-II port, reads engine, fuel, exhaust and sensor data, and turns it into an easy-to-understand report with AI. If you don't have an adapter, there is also a pre-evaluation mode where you simply enter the make, model and year to see the known chronic issues specific to that vehicle.",
+      "NesiVar? is an independent pre-purchase inspection tool for used cars. Using a Vgate iCar Pro V2.1 BLE adapter, it connects to the car's OBD-II port, reads engine, fuel, exhaust and sensor data, and turns it into an easy-to-understand report with AI. If you don't have an adapter, there is also a pre-evaluation mode where you simply enter the make, model and year to see the known chronic issues specific to that vehicle.",
 
     howTitle: "How does it work?",
     steps: [
@@ -197,7 +197,7 @@ export const CONTENT: Record<Lang, NesivarCopy> = {
       { title: "Get the report", body: "See your AI-powered confidence score and detailed analysis." },
     ],
 
-    givesTitle: "What does NesiVar give you?",
+    givesTitle: "What does NesiVar? give you?",
     features: [
       { title: "Confidence Score", body: "A single score showing the car's overall condition at a glance." },
       { title: "Fault codes (DTC)", body: "Reveals hidden or recently cleared trouble codes." },
@@ -237,14 +237,14 @@ export const CONTENT: Record<Lang, NesivarCopy> = {
     faq: [
       {
         q: "What is NesiVar?",
-        a: "NesiVar is an iOS app that reads your car's ECU data over OBD-II and interprets it with AI so you can make the right decision when buying a used car. It presents the result as a clear report with a confidence score.",
+        a: "NesiVar? is an iOS app that reads your car's ECU data over OBD-II and interprets it with AI so you can make the right decision when buying a used car. It presents the result as a clear report with a confidence score.",
       },
       {
-        q: "How does NesiVar work?",
+        q: "How does NesiVar? work?",
         a: "You plug a Vgate iCar Pro V2.1 BLE adapter into the car's OBD-II port, connect the app over Bluetooth, start the scan, and receive an AI-powered confidence score along with a detailed analysis.",
       },
       {
-        q: "Is NesiVar free?",
+        q: "Is NesiVar? free?",
         a: "The app is free to download from the App Store and includes in-app purchases. Some analysis and scan features are unlocked through in-app purchases.",
       },
       {
@@ -252,28 +252,28 @@ export const CONTENT: Record<Lang, NesivarCopy> = {
         a: "For a full OBD-II scan you need a Vgate iCar Pro V2.1 BLE OBD-II adapter and a Bluetooth-capable iPhone. The vehicle must support OBD-II / SAE J1979 (generally 2004 and newer models).",
       },
       {
-        q: "Can I use NesiVar without an adapter?",
+        q: "Can I use NesiVar? without an adapter?",
         a: "Yes. In the adapter-free 'pre-evaluation' mode you just enter the make, model, year and fuel type, and the app lists the known chronic issues and things to watch out for on that vehicle.",
       },
       {
-        q: "Does NesiVar reveal hidden faults?",
+        q: "Does NesiVar? reveal hidden faults?",
         a: "The app reads fault codes (DTCs) and evaluates hidden or recently cleared trouble traces. It also treats non-responding sensors as a signal and includes them in the report rather than hiding them.",
       },
       {
-        q: "Does NesiVar replace a professional inspection?",
-        a: "No. NesiVar does not replace a professional inspection or mechanical examination. The confidence score and analyses are for informational purposes; for a final purchase decision you should consult a qualified expert.",
+        q: "Does NesiVar? replace a professional inspection?",
+        a: "No. NesiVar? does not replace a professional inspection or mechanical examination. The confidence score and analyses are for informational purposes; for a final purchase decision you should consult a qualified expert.",
       },
       {
         q: "Who made NesiVar?",
-        a: "NesiVar is developed by RussellCode, a software studio that builds AI-native products.",
+        a: "NesiVar? is developed by RussellCode, a software studio that builds AI-native products.",
       },
     ],
 
     disclaimerTitle: "Important note",
     disclaimerBody:
-      "NesiVar does not replace a professional inspection or mechanical examination. The confidence score and analyses provided are for informational and guidance purposes; for a final purchase decision and detailed inspection, consulting a qualified expert is recommended.",
+      "NesiVar? does not replace a professional inspection or mechanical examination. The confidence score and analyses provided are for informational and guidance purposes; for a final purchase decision and detailed inspection, consulting a qualified expert is recommended.",
 
-    footerNote: "NesiVar is a product by RussellCode.",
+    footerNote: "NesiVar? is a product by RussellCode.",
     backToStudio: "Back to russellcode.com",
   },
 };

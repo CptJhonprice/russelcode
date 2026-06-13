@@ -57,19 +57,25 @@ export default function PhilosophyScene() {
               dot.style.boxShadow = i === idx ? "0 0 10px rgba(61,107,140,0.55)" : "none";
             });
 
-            // Animate text
-            gsap.to([textRef.current, subRef.current], {
-              opacity: 0, y: -20, duration: 0.22, ease: "power2.in",
-              onComplete() {
-                if (textRef.current) textRef.current.textContent = STATES[idx].text;
-                if (subRef.current)  subRef.current.textContent  = STATES[idx].sub;
-                gsap.fromTo(
-                  [textRef.current, subRef.current],
-                  { opacity: 0, y: 26 },
-                  { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.06 }
-                );
-              },
-            });
+            // Animate text (skip if the refs have unmounted)
+            const targets = [textRef.current, subRef.current].filter(Boolean);
+            if (targets.length) {
+              gsap.to(targets, {
+                opacity: 0, y: -20, duration: 0.22, ease: "power2.in",
+                onComplete() {
+                  if (textRef.current) textRef.current.textContent = STATES[idx].text;
+                  if (subRef.current)  subRef.current.textContent  = STATES[idx].sub;
+                  const back = [textRef.current, subRef.current].filter(Boolean);
+                  if (back.length) {
+                    gsap.fromTo(
+                      back,
+                      { opacity: 0, y: 26 },
+                      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.06 }
+                    );
+                  }
+                },
+              });
+            }
           }
         },
       });

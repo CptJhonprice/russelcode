@@ -1,4 +1,4 @@
-// Server component. Renders the full NesiVar GEO landing page for one language.
+// Server component. Renders the full NesiVar? GEO landing page for one language.
 // Pure SSR, semantic HTML, plus JSON-LD (MobileApplication + Organization +
 // FAQPage + Breadcrumb) so AI engines and crawlers can read the content.
 import Link from "next/link";
@@ -42,8 +42,8 @@ function jsonLd(lang: Lang) {
   const app = {
     "@context": "https://schema.org",
     "@type": "MobileApplication",
-    name: "NesiVar",
-    alternateName: "NesiVar AI Analysis",
+    name: "NesiVar?",
+    alternateName: ["NesiVar? - AI Analysis", "NesiVar"],
     operatingSystem: NESIVAR.operatingSystem,
     applicationCategory: "UtilitiesApplication",
     description: c.metaDescription,
@@ -82,7 +82,7 @@ function jsonLd(lang: Lang) {
         : "A software studio building AI-native products, mobile apps and scalable software systems.",
     makesOffer: {
       "@type": "Offer",
-      itemOffered: { "@type": "MobileApplication", name: "NesiVar", url },
+      itemOffered: { "@type": "MobileApplication", name: "NesiVar?", url },
     },
   };
 
@@ -102,7 +102,7 @@ function jsonLd(lang: Lang) {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "RussellCode", item: SITE },
-      { "@type": "ListItem", position: 2, name: "NesiVar", item: url },
+      { "@type": "ListItem", position: 2, name: "NesiVar?", item: url },
     ],
   };
 
@@ -137,7 +137,7 @@ export default function NesivarLanding({ lang }: { lang: Lang }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/nesivar/icon.png"
-            alt="NesiVar uygulama simgesi"
+            alt="NesiVar? uygulama simgesi"
             width={72}
             height={72}
             style={{ width: 72, height: 72, borderRadius: "1rem", marginBottom: "1.25rem", boxShadow: "0 4px 24px var(--accent-glow)" }}
@@ -269,7 +269,7 @@ export default function NesivarLanding({ lang }: { lang: Lang }) {
           </ul>
         </Section>
 
-        {/* ── Why NesiVar ────────────────────────────────────── */}
+        {/* ── Why NesiVar? ────────────────────────────────────── */}
         <Section title={c.whyTitle}>
           <ul style={listStyle}>
             {c.why.map((w, i) => (

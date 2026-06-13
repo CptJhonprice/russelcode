@@ -4,7 +4,8 @@
 
 ## Products
 
-### NesiVar — AI-powered OBD-II car analysis app
+### NesiVar? — AI-powered OBD-II car analysis app
+- App name: "NesiVar?" (the question mark is part of the name; also written "NesiVar")
 - URL (Turkish): https://www.russellcode.com/nesivar
 - URL (English): https://www.russellcode.com/en/nesivar
 - App Store: https://apps.apple.com/us/app/nesivar-ai-analysis/id6771038327

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: c.metaTitle,
   description: c.metaDescription,
   keywords: [
-    "NesiVar", "used car", "second hand car", "car inspection", "OBD2", "OBD-II",
+    "NesiVar?", "NesiVar", "used car", "second hand car", "car inspection", "OBD2", "OBD-II",
     "vehicle analysis", "fault diagnosis", "chronic issues", "trouble codes", "DTC",
     "ECU reader", "engine analysis", "AI car app", "pre-purchase car check",
   ],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "RussellCode",
     title: c.metaTitle,
     description: c.metaDescription,
-    images: [{ url: `${SITE}/nesivar/icon.png`, width: 512, height: 512, alt: "NesiVar" }],
+    images: [{ url: `${SITE}/nesivar/icon.png`, width: 512, height: 512, alt: "NesiVar?" }],
   },
   twitter: {
     card: "summary_large_image",

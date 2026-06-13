@@ -46,11 +46,13 @@ export default function HeroScene() {
           scrub: 1.2,
           onUpdate(self) {
             const p = self.progress;
-            gsap.set([headRef.current, subRef.current], {
-              opacity: Math.max(0, 1 - p * 2.2),
-              y: -p * 80,
-            });
-            gsap.set(scrollRef.current, { opacity: Math.max(0, 1 - p * 6) });
+            const heads = [headRef.current, subRef.current].filter(Boolean);
+            if (heads.length) {
+              gsap.set(heads, { opacity: Math.max(0, 1 - p * 2.2), y: -p * 80 });
+            }
+            if (scrollRef.current) {
+              gsap.set(scrollRef.current, { opacity: Math.max(0, 1 - p * 6) });
+            }
           },
         });
       }

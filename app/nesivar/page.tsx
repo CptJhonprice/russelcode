@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: c.metaTitle,
   description: c.metaDescription,
   keywords: [
-    "NesiVar", "ikinci el araç", "2. el araç", "oto ekspertiz", "OBD2", "OBD-II",
+    "NesiVar?", "NesiVar", "ikinci el araç", "2. el araç", "oto ekspertiz", "OBD2", "OBD-II",
     "araç analiz", "arıza tespit", "kronik sorun", "hata kodu", "DTC", "ECU okuma",
     "motor analiz", "yapay zeka araç", "araç kontrol", "satın almadan önce",
   ],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "RussellCode",
     title: c.metaTitle,
     description: c.metaDescription,
-    images: [{ url: `${SITE}/nesivar/icon.png`, width: 512, height: 512, alt: "NesiVar" }],
+    images: [{ url: `${SITE}/nesivar/icon.png`, width: 512, height: 512, alt: "NesiVar?" }],
   },
   twitter: {
     card: "summary_large_image",
