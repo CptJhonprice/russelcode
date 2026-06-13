@@ -229,6 +229,13 @@ button, a, [role="button"] {
 }
 
 /* ━━━ SCANNER CARD STREAM ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes glitch {
+  0%, 16%, 50%, 100% { opacity: 1; }
+  15%, 99% { opacity: 0.9; }
+  49% { opacity: 0.8; }
+}
+.animate-glitch { animation: glitch 0.1s infinite linear alternate-reverse; }
+
 @keyframes scanPulse {
   0%   { opacity: 0.75; transform: translate(-50%, -50%) scaleY(1); }
   100% { opacity: 1;    transform: translate(-50%, -50%) scaleY(1.03); }

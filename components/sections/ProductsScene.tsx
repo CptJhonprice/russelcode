@@ -35,7 +35,7 @@ export default function ProductsScene() {
   return (
     <section
       id="products"
-      className="relative w-full overflow-hidden pb-32 md:pb-48"
+      className="relative w-full overflow-hidden pb-20 md:pb-28"
       aria-labelledby="products-heading"
       style={{ background: "var(--bg)" }}
     >

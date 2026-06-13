@@ -32,7 +32,7 @@ export default function CapabilitiesScene() {
   return (
     <section
       id="capabilities"
-      className="relative w-full py-32 md:py-48 overflow-hidden"
+      className="relative w-full py-20 md:py-28 overflow-hidden"
       aria-labelledby="capabilities-heading"
       style={{ background: "var(--bg)" }}
     >

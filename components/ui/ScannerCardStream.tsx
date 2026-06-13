@@ -13,6 +13,16 @@ const defaultCardImages = [
   "https://cdn.prod.website-files.com/68789c86c8bc802d61932544/689f20b5bea2f1b07392d936_4.png",
 ];
 
+// Digit-heavy charset so scanned cards read as numbers / card codes
+const SCAN_CHARS = "0123456789 0123456789 0123456789 ABCDEF.:/";
+function generateCode(width: number, height: number): string {
+  let text = "";
+  for (let i = 0; i < width * height; i++) text += SCAN_CHARS[Math.floor(Math.random() * SCAN_CHARS.length)];
+  let out = "";
+  for (let i = 0; i < height; i++) out += text.substring(i * width, (i + 1) * width) + "\n";
+  return out;
+}
+
 type ScannerCardStreamProps = {
   initialSpeed?: number;
   direction?: -1 | 1;
@@ -39,6 +49,7 @@ export function ScannerCardStream({
     return Array.from({ length: total }, (_, i) => ({
       id: i,
       image: cardImages[i % cardImages.length],
+      ascii: generateCode(Math.floor(400 / 6.5), Math.floor(250 / 13)),
     }));
   }, [cardImages, repeat]);
 
@@ -157,8 +168,25 @@ export function ScannerCardStream({
     let spray: SP[] = Array.from({ length: baseMax }, makeSP);
     let scanningNow = false;
 
-    // Detect whether a card is currently crossing the centre scanner line
-    const detectScan = () => {
+    // ── Scramble a card's code as it crosses the scanner ───────────
+    const runScramble = (el: HTMLElement) => {
+      if (el.dataset.scrambling === "true") return;
+      el.dataset.scrambling = "true";
+      const original = el.textContent ?? "";
+      let n = 0;
+      const id = setInterval(() => {
+        el.textContent = generateCode(Math.floor(400 / 6.5), Math.floor(250 / 13));
+        if (++n >= 10) {
+          clearInterval(id);
+          el.textContent = original;
+          delete el.dataset.scrambling;
+        }
+      }, 30);
+    };
+
+    // As each card crosses the centre line, clip the image away to reveal
+    // the numeric code layer beneath it.
+    const updateCardEffects = () => {
       const scannerX = window.innerWidth / 2;
       const w = 8;
       const left = scannerX - w / 2;
@@ -166,7 +194,27 @@ export function ScannerCardStream({
       let any = false;
       cardLine.querySelectorAll<HTMLElement>(".card-wrapper").forEach((wrapper) => {
         const rect = wrapper.getBoundingClientRect();
-        if (rect.left < right && rect.right > left) any = true;
+        const normal = wrapper.querySelector<HTMLElement>(".card-normal")!;
+        const ascii = wrapper.querySelector<HTMLElement>(".card-ascii")!;
+        const asciiPre = ascii.querySelector<HTMLElement>("pre")!;
+        if (rect.left < right && rect.right > left) {
+          any = true;
+          if (wrapper.dataset.scanned !== "true") runScramble(asciiPre);
+          wrapper.dataset.scanned = "true";
+          const iLeft = Math.max(left - rect.left, 0);
+          const iRight = Math.min(right - rect.left, rect.width);
+          normal.style.setProperty("--clip-right", `${(iLeft / rect.width) * 100}%`);
+          ascii.style.setProperty("--clip-left", `${(iRight / rect.width) * 100}%`);
+        } else {
+          delete wrapper.dataset.scanned;
+          if (rect.right < left) {
+            normal.style.setProperty("--clip-right", "100%");
+            ascii.style.setProperty("--clip-left", "100%");
+          } else {
+            normal.style.setProperty("--clip-right", "0%");
+            ascii.style.setProperty("--clip-left", "0%");
+          }
+        }
       });
       scanningNow = any;
       setIsScanning(any);
@@ -231,7 +279,7 @@ export function ScannerCardStream({
       else if (s.position > containerW) s.position = -s.cardLineWidth;
       cardLine.style.transform = `translateX(${s.position}px)`;
 
-      detectScan();
+      updateCardEffects();
 
       // particles
       const t = now * 0.001;
@@ -287,7 +335,7 @@ export function ScannerCardStream({
   return (
     <section
       aria-label="Project showcase stream"
-      className="relative w-full overflow-hidden py-16 md:py-24"
+      className="relative w-full overflow-hidden py-10 md:py-14"
       style={{ background: "var(--bg)" }}
     >
       {/* Top / bottom hairlines tie it into the page rhythm */}
@@ -301,10 +349,10 @@ export function ScannerCardStream({
           ref={particleCanvasRef}
           className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[250px] z-0 pointer-events-none"
         />
-        {/* Scanner spray */}
+        {/* Scanner spray — sits behind the cards so dots fly behind them */}
         <canvas
           ref={scannerCanvasRef}
-          className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[300px] z-10 pointer-events-none"
+          className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[300px] z-0 pointer-events-none"
         />
         {/* Scanner line */}
         <div
@@ -328,14 +376,32 @@ export function ScannerCardStream({
               key={card.id}
               className="card-wrapper relative w-[260px] h-[163px] md:w-[400px] md:h-[250px] shrink-0"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={card.image}
-                alt="Showcase card"
-                draggable={false}
-                className="w-full h-full object-cover rounded-[15px] brightness-110 contrast-110"
-                style={{ boxShadow: isLight ? "0 12px 32px rgba(20,40,60,0.18)" : "0 15px 40px rgba(0,0,0,0.4)" }}
-              />
+              {/* Image layer — clipped away from the left as it is scanned */}
+              <div className="card-normal absolute inset-0 rounded-[15px] overflow-hidden z-[2] [clip-path:inset(0_0_0_var(--clip-right,0%))]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={card.image}
+                  alt="Showcase card"
+                  draggable={false}
+                  className="w-full h-full object-cover rounded-[15px] brightness-110 contrast-110"
+                  style={{ boxShadow: isLight ? "0 12px 32px rgba(20,40,60,0.18)" : "0 15px 40px rgba(0,0,0,0.4)" }}
+                />
+              </div>
+              {/* Numeric code layer revealed beneath the image. Background matches
+                  the page so the dots stay BEHIND the numbers (no bleed-through) while
+                  the panel itself stays invisible — no boxy edge or shadow. */}
+              <div
+                className="card-ascii absolute inset-0 overflow-hidden z-[1] [clip-path:inset(0_calc(100%-var(--clip-left,0%))_0_0)]"
+                style={{ background: "var(--bg)" }}
+              >
+                <pre
+                  suppressHydrationWarning
+                  className="absolute inset-0 w-full h-full font-mono text-[11px] leading-[13px] overflow-hidden whitespace-pre m-0 p-0 text-left box-border animate-glitch [mask-image:linear-gradient(to_right,rgba(0,0,0,1)_0%,rgba(0,0,0,0.6)_50%,rgba(0,0,0,0.2)_100%)]"
+                  style={{ color: isLight ? "rgba(40,82,112,0.6)" : "rgba(150,190,225,0.65)" }}
+                >
+                  {card.ascii}
+                </pre>
+              </div>
             </div>
           ))}
         </div>

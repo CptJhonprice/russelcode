@@ -58,7 +58,7 @@ export default function ContactScene() {
   return (
     <section
       id="contact"
-      className="relative w-full min-h-screen flex flex-col overflow-hidden"
+      className="relative w-full flex flex-col overflow-hidden"
       aria-labelledby="contact-heading"
       style={{ background: "var(--bg)" }}
     >
@@ -73,7 +73,7 @@ export default function ContactScene() {
 
       <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--color-border-subtle)" }} aria-hidden="true" />
 
-      <div className="relative z-10 flex-1 flex items-center justify-center px-5 md:px-10 py-28 md:py-40">
+      <div className="relative z-10 flex-1 flex items-center justify-center px-5 md:px-10 py-24 md:py-32">
         <div className="w-full max-w-xl mx-auto">
 
           <motion.div
@@ -229,15 +229,6 @@ export default function ContactScene() {
           </div>
         </div>
       </div>
-
-      <footer
-        className="relative z-10 px-5 md:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-3"
-        style={{ borderTop: "1px solid var(--color-border-subtle)" }}
-      >
-        <span className="t-label" style={{ color: "var(--color-text-ghost)" }}>RUSSELLCODE</span>
-        <span className="t-label" style={{ color: "var(--color-text-ghost)" }}>© {new Date().getFullYear()} — ALL RIGHTS RESERVED</span>
-        <span className="t-label" style={{ color: "var(--color-text-ghost)" }}>SOFTWARE BUILT WITH REASON.</span>
-      </footer>
     </section>
   );
 }

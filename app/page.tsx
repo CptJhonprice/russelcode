@@ -7,6 +7,7 @@ import ProductsScene from "@/components/sections/ProductsScene";
 import CapabilitiesScene from "@/components/sections/CapabilitiesScene";
 import ScannerCardStream from "@/components/ui/ScannerCardStream";
 import ContactScene from "@/components/sections/ContactScene";
+import SiteFooter from "@/components/ui/SiteFooter";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <CapabilitiesScene />
       <ContactScene />
       <ScannerCardStream />
+      <SiteFooter />
     </Layout>
   );
 }
