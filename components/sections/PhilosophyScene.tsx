@@ -5,19 +5,15 @@ import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionLabel from "@/components/ui/SectionLabel";
+import { useLanguage } from "@/context/LanguageContext";
 
 const PhilosophyGL = dynamic(() => import("@/components/three/PhilosophyGL"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STATES = [
-  { text: "Logic before noise.",         sub: "Clarity is the foundation of every system we build." },
-  { text: "Systems before screens.",     sub: "Architecture precedes interface. Structure precedes style." },
-  { text: "Products before promises.",   sub: "We ship working software, not decks or prototypes." },
-  { text: "Software built with reason.", sub: "Every line of code has a purpose. Every feature has a reason." },
-];
-
 export default function PhilosophyScene() {
+  const { t, lang } = useLanguage();
+  const STATES = t.philosophy.states;
   const outerRef  = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const textRef   = useRef<HTMLSpanElement>(null);
@@ -31,6 +27,7 @@ export default function PhilosophyScene() {
   const prevIdx    = useRef(-1);
 
   useEffect(() => {
+    prevIdx.current = -1; // re-apply current line when language changes
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: outerRef.current,
@@ -79,7 +76,8 @@ export default function PhilosophyScene() {
     }, outerRef);
 
     return () => ctx.revert();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   return (
     <div ref={outerRef} style={{ height: "400vh" }}>
@@ -115,7 +113,7 @@ export default function PhilosophyScene() {
 
         {/* Top bar */}
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 pt-7">
-          <SectionLabel index="//02" title="PHILOSOPHY" />
+          <SectionLabel index="//02" title={t.nav.philosophy} />
           <span ref={numRef} className="t-label tabular-nums" style={{ color: "var(--fg-ghost)" }}>
             01 / 04
           </span>

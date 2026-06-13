@@ -5,12 +5,14 @@ import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionLabel from "@/components/ui/SectionLabel";
+import { useLanguage } from "@/context/LanguageContext";
 
 const SplineHero = dynamic(() => import("@/components/three/SplineHero"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroScene() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef      = useRef<HTMLDivElement>(null);
   const headRef    = useRef<HTMLDivElement>(null);
@@ -84,7 +86,7 @@ export default function HeroScene() {
         <span className="t-label" style={{ color: "var(--fg)", letterSpacing: "0.28em", fontSize: "0.58rem" }}>
           RUSSELLCODE
         </span>
-        <SectionLabel index="//01" title="INTRO" />
+        <SectionLabel index="//01" title={t.nav.intro} />
         <div style={{ width: 140 }} aria-hidden="true" />
       </div>
 
@@ -92,21 +94,20 @@ export default function HeroScene() {
       <div className="relative z-10 flex-1 flex flex-col justify-end px-5 md:px-10 lg:px-16 pb-20 md:pb-32 max-w-[90rem] mx-auto w-full pointer-events-none">
         <div ref={headRef} style={{ opacity: 0 }}>
           <h1 id="hero-heading" className="t-display mb-8">
-            Software
+            {t.hero.title[0]}
             <br />
-            <span style={{ color: "rgba(74,130,168,0.38)" }}>built with</span>
+            <span style={{ color: "rgba(74,130,168,0.38)" }}>{t.hero.title[1]}</span>
             <br />
-            reason.
+            {t.hero.title[2]}
           </h1>
 
           <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-16">
             <div className="flex items-center gap-4">
               <div style={{ width: 32, height: 1, background: "var(--accent)", flexShrink: 0 }} aria-hidden="true" />
-              <span className="t-label" style={{ color: "var(--accent)" }}>SOFTWARE STUDIO — EST. 2026</span>
+              <span className="t-label" style={{ color: "var(--accent)" }}>{t.hero.studio}</span>
             </div>
             <p ref={subRef} className="t-body" style={{ maxWidth: "40ch", opacity: 0 }}>
-              RussellCode designs and builds AI&#8209;native products,
-              mobile apps, and scalable software systems.
+              {t.hero.subtitle}
             </p>
           </div>
         </div>
@@ -122,7 +123,7 @@ export default function HeroScene() {
         <div className="w-px overflow-hidden" style={{ height: 48, background: "var(--border-mid)" }}>
           <div className="w-full h-full" style={{ background: "var(--accent)", animation: "scrollPulse 2.2s ease-in-out infinite" }} />
         </div>
-        <span className="t-label" style={{ writingMode: "vertical-rl", letterSpacing: "0.16em" }}>SCROLL</span>
+        <span className="t-label" style={{ writingMode: "vertical-rl", letterSpacing: "0.16em" }}>{t.hero.scroll}</span>
       </div>
 
       {/* Bottom rule */}

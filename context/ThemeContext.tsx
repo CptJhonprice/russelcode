@@ -19,9 +19,9 @@ const ThemeContext = createContext<ThemeContextValue>({
 const STORAGE_KEY = "rc-theme";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Start from the SSR default ("dark") so the first client render matches the
-  // server markup, then apply the saved theme right after mount.
-  const [theme, setThemeState] = useState<Theme>("dark");
+  // Start from the SSR default ("light", matching <html data-theme>) so the first
+  // client render matches the server markup, then apply the saved theme after mount.
+  const [theme, setThemeState] = useState<Theme>("light");
 
   const apply = (t: Theme) => {
     setThemeState(t);
@@ -37,7 +37,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Read the saved theme once mounted and apply it to <html>.
   useEffect(() => {
-    let initial: Theme = "dark";
+    let initial: Theme = "light";
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved === "light" || saved === "dark") initial = saved;

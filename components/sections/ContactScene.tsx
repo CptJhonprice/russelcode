@@ -4,10 +4,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import AnimatedGrid from "@/components/ui/AnimatedGrid";
+import { useLanguage } from "@/context/LanguageContext";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function ContactScene() {
+  const { t } = useLanguage();
   const [name,    setName]    = useState("");
   const [email,   setEmail]   = useState("");
   const [message, setMessage] = useState("");
@@ -81,7 +83,7 @@ export default function ContactScene() {
             viewport={{ once: true }} transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex justify-center mb-10"
           >
-            <SectionLabel index="//06" title="CONTACT" />
+            <SectionLabel index="//06" title={t.nav.contact} />
           </motion.div>
 
           <motion.h2
@@ -90,9 +92,9 @@ export default function ContactScene() {
             initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.08, ease: [0.16,1,0.3,1] }}
           >
-            Build with
+            {t.contact.headingPre}
             <br />
-            <em className="not-italic" style={{ color: "rgba(74,130,168,0.55)" }}>RussellCode.</em>
+            <em className="not-italic" style={{ color: "rgba(74,130,168,0.55)" }}>{t.contact.headingEm}</em>
           </motion.h2>
 
           <motion.p
@@ -101,7 +103,7 @@ export default function ContactScene() {
             initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.16, ease: "easeOut" }}
           >
-            Proje fikrinizi paylaşın, sizinle iletişime geçelim.
+            {t.contact.subtitle}
           </motion.p>
 
           {/* ── Form ── */}
@@ -126,7 +128,7 @@ export default function ContactScene() {
               {/* Name */}
               <div className="relative">
                 <label className="t-label block mb-2" style={{ color: "var(--fg-sub)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
-                  İSİM
+                  {t.contact.name}
                 </label>
                 <input
                   type="text"
@@ -134,7 +136,7 @@ export default function ContactScene() {
                   onChange={e => setName(e.target.value)}
                   required
                   minLength={2}
-                  placeholder="Adınız Soyadınız"
+                  placeholder={t.contact.namePh}
                   style={{ ...inputStyle, cursor: "none" }}
                   onFocus={e => (e.currentTarget.style.borderBottomColor = "#4a82a8")}
                   onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-strong)")}
@@ -144,14 +146,14 @@ export default function ContactScene() {
               {/* Email */}
               <div className="relative">
                 <label className="t-label block mb-2" style={{ color: "var(--fg-sub)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
-                  E-POSTA
+                  {t.contact.email}
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
-                  placeholder="ornek@sirket.com"
+                  placeholder={t.contact.emailPh}
                   style={{ ...inputStyle, cursor: "none" }}
                   onFocus={e => (e.currentTarget.style.borderBottomColor = "#4a82a8")}
                   onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-strong)")}
@@ -161,7 +163,7 @@ export default function ContactScene() {
               {/* Message */}
               <div className="relative">
                 <label className="t-label block mb-2" style={{ color: "var(--fg-sub)", fontSize: "0.48rem", letterSpacing: "0.28em" }}>
-                  MESAJ
+                  {t.contact.message}
                 </label>
                 <textarea
                   value={message}
@@ -169,7 +171,7 @@ export default function ContactScene() {
                   required
                   minLength={10}
                   rows={4}
-                  placeholder="Projenizi kısaca anlatın..."
+                  placeholder={t.contact.messagePh}
                   style={{ ...inputStyle, resize: "none", cursor: "none" }}
                   onFocus={e => (e.currentTarget.style.borderBottomColor = "#4a82a8")}
                   onBlur={e  => (e.currentTarget.style.borderBottomColor = "var(--color-border-strong)")}
@@ -194,7 +196,7 @@ export default function ContactScene() {
               onMouseEnter={e => { if (status !== "sending") (e.currentTarget as HTMLButtonElement).style.borderColor = "#4a82a8"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--color-border-strong)"; }}
             >
-              {status === "sending" ? "GÖNDERİLİYOR..." : "PROJEYİ BAŞLAT"}
+              {status === "sending" ? t.contact.sending : t.contact.submit}
               {status !== "sending" && (
                 <span className="block h-px" style={{ width: 16, background: "var(--color-accent)", transition: "width 0.2s ease" }} />
               )}
@@ -207,7 +209,7 @@ export default function ContactScene() {
                 className="t-label mt-5 text-center"
                 style={{ color: "#4a82a8", fontSize: "0.52rem", letterSpacing: "0.2em" }}
               >
-                ✓ Mesajınız alındı — en kısa sürede dönüş yapacağız.
+                {t.contact.success}
               </motion.p>
             )}
             {status === "error" && (

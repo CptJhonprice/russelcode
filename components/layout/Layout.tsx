@@ -7,9 +7,11 @@ import NoiseOverlay from "@/components/ui/NoiseOverlay";
 import ProgressIndicator from "@/components/ui/ProgressIndicator";
 import SoundToggle from "@/components/ui/SoundToggle";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import LanguageToggle from "@/components/ui/LanguageToggle";
 import EnterScreen from "@/components/ui/EnterScreen";
 import { AssetsContext } from "@/context/AssetsContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), { ssr: false });
 
@@ -38,6 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider>
+      <LanguageProvider>
       <AssetsContext.Provider value={{ notifySceneLoaded: () => setSceneLoaded(true) }}>
         {/* Cursor always on top — above EnterScreen z-[9999] */}
         <CustomCursor />
@@ -53,11 +56,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <ProgressIndicator />
           <SoundToggle />
           <ThemeToggle />
+          <LanguageToggle />
           <main id="main-content" tabIndex={-1}>
             {children}
           </main>
         </div>
       </AssetsContext.Provider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

@@ -5,45 +5,15 @@ import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionLabel from "@/components/ui/SectionLabel";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ProcessGL = dynamic(() => import("@/components/three/ProcessGL"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STEPS = [
-  {
-    label: "Idea",
-    sub: "Discovery & Direction",
-    copy: "We shape raw product ideas into clear technical direction.",
-    detail: "Market research, scope definition, tech stack decisions.",
-  },
-  {
-    label: "Prototype",
-    sub: "Validate Fast",
-    copy: "We build fast, focused prototypes to validate the core experience.",
-    detail: "Interactive wireframes, UX flows, rapid iteration cycles.",
-  },
-  {
-    label: "Product",
-    sub: "Build & Craft",
-    copy: "We turn validated flows into real mobile and web applications.",
-    detail: "Full-stack development, design system, CI/CD pipeline.",
-  },
-  {
-    label: "Launch",
-    sub: "Ship to Users",
-    copy: "We prepare the product for users, stores, analytics, and production.",
-    detail: "App store publishing, monitoring, onboarding, growth hooks.",
-  },
-  {
-    label: "Scale",
-    sub: "Grow & Evolve",
-    copy: "We improve architecture, automation, performance, and growth systems.",
-    detail: "Infra scaling, A/B testing, feature velocity, data pipelines.",
-  },
-];
-
 export default function ProcessScene() {
+  const { t, lang } = useLanguage();
+  const STEPS = t.process.steps;
   const outerRef   = useRef<HTMLDivElement>(null);
   const stickyRef  = useRef<HTMLDivElement>(null);
   const copyRef    = useRef<HTMLParagraphElement>(null);
@@ -59,6 +29,7 @@ export default function ProcessScene() {
   const prevStep   = useRef(-1);
 
   useEffect(() => {
+    prevStep.current = -1; // re-apply current step text when language changes
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: outerRef.current,
@@ -160,7 +131,8 @@ export default function ProcessScene() {
       });
     }, outerRef);
     return () => ctx.revert();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   return (
     <div ref={outerRef} style={{ height: "500vh" }}>
@@ -189,11 +161,11 @@ export default function ProcessScene() {
 
         {/* ── Top bar ── */}
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 pt-7">
-          <SectionLabel index="//03" title="PROCESS" />
+          <SectionLabel index="//03" title={t.nav.process} />
           <div className="flex items-center gap-2.5">
             <span ref={stepNumRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.14em", color: "#4a82a8" }}>01</span>
             <span style={{ width: 1, height: 12, background: "var(--border-strong)", display: "inline-block" }} />
-            <span ref={stepLblRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.26em", color: "#2a4a62" }}>IDEA</span>
+            <span ref={stepLblRef} style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.26em", color: "#2a4a62" }}>{STEPS[0].label.toUpperCase()}</span>
           </div>
         </div>
 

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import dynamic from "next/dynamic";
+import { useLanguage } from "@/context/LanguageContext";
 
 const NeuralNoise = dynamic(() => import("@/components/three/NeuralNoise"), { ssr: false });
 
@@ -47,6 +48,7 @@ function useScramble(original: string, delay = 700) {
 }
 
 export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProps) {
+  const { t } = useLanguage();
   const [progress, setProgress]   = useState(0);
   const [entering, setEntering]   = useState(false);
   const [showUI, setShowUI]       = useState(false);
@@ -188,7 +190,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
             <span style={{ width: "clamp(40px, 6vw, 80px)", height: 1, background: "linear-gradient(to left, transparent, #4a82a8)" }} />
           </div>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.32em", color: "#3a6483" }}>
-            SOFTWARE STUDIO
+            {t.enter.studio}
           </span>
         </div>
 
@@ -283,14 +285,14 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
                   marginTop: 20,
                 }}
               >
-                ENTER SITE
+                {t.enter.enterSite}
               </span>
             </button>
           ) : (
             /* Loading state */
             <div className="flex flex-col items-center gap-5">
               <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.5rem", letterSpacing: "0.3em", color: "#3d6b8c" }}>
-                PREPARING EXPERIENCE
+                {t.enter.preparing}
               </span>
               <div style={{ position: "relative", width: 220, height: 1, background: "#0e1a24" }}>
                 <div
@@ -328,7 +330,7 @@ export default function EnterScreen({ sceneLoaded, onComplete }: EnterScreenProp
         }}
       >
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.44rem", letterSpacing: "0.28em", color: "#3a6483" }}>
-          SOFTWARE BUILT WITH REASON.
+          {t.enter.tagline}
         </span>
       </div>
 

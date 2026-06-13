@@ -1,20 +1,15 @@
-const ITEMS = [
-  "AI-Native Products",
-  "Mobile Applications",
-  "Backend Systems",
-  "Product Strategy",
-  "Scalable Architecture",
-  "Automation & APIs",
-  "Software Built with Reason",
-];
+"use client";
+
+import { useLanguage } from "@/context/LanguageContext";
 
 interface TickerProps {
   className?: string;
 }
 
 export default function Ticker({ className = "" }: TickerProps) {
+  const { t } = useLanguage();
   // Duplicate for seamless loop
-  const all = [...ITEMS, ...ITEMS];
+  const all = [...t.ticker, ...t.ticker];
 
   return (
     <div

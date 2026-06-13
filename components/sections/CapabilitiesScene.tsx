@@ -2,17 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
-
-const CAPABILITIES = [
-  { name: "Mobile Apps",            note: "iOS & Android" },
-  { name: "AI Systems",             note: "LLM pipelines, agents" },
-  { name: "Backend Infrastructure", note: "APIs, databases, cloud" },
-  { name: "Product Strategy",       note: "Roadmap, prioritisation" },
-  { name: "Automation",             note: "Workflows, jobs, triggers" },
-  { name: "API Integrations",       note: "Third-party connectivity" },
-  { name: "Store Deployment",       note: "App Store, Play Store" },
-  { name: "Scalable Architecture",  note: "Performance, reliability" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 /*
  * duration: 250ms within 150-300ms window (ui-ux-pro-max §7 duration-timing)
@@ -29,6 +19,8 @@ const rowVariant: Variants = {
 };
 
 export default function CapabilitiesScene() {
+  const { t } = useLanguage();
+  const CAPABILITIES = t.capabilities.items;
   return (
     <section
       id="capabilities"
@@ -47,20 +39,19 @@ export default function CapabilitiesScene() {
 
           {/* Left — heading */}
           <div className="lg:sticky lg:top-32 self-start">
-            <SectionLabel index="//05" title="CAPABILITIES" className="mb-6" />
+            <SectionLabel index="//05" title={t.nav.capabilities} className="mb-6" />
             <h2
               id="capabilities-heading"
               className="t-headline mb-8"
             >
-              What we
+              {t.capabilities.headingPre}
               <br />
               <em className="not-italic" style={{ color: "rgba(74,130,168,0.55)" }}>
-                build.
+                {t.capabilities.headingEm}
               </em>
             </h2>
             <p className="t-body" style={{ maxWidth: "30ch" }}>
-              Full-spectrum software execution — from product conception to
-              production infrastructure and growth systems.
+              {t.capabilities.sub}
             </p>
 
             {/* Canvas geometric accent */}

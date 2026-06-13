@@ -4,34 +4,16 @@ import dynamic from "next/dynamic";
 import SectionLabel from "@/components/ui/SectionLabel";
 import ProductCard from "@/components/ui/ProductCard";
 import { LampContainer } from "@/components/ui/LampContainer";
+import { useLanguage } from "@/context/LanguageContext";
 
 const AmbientField = dynamic(() => import("@/components/three/AmbientField"), { ssr: false });
 
-const PRODUCTS = [
-  {
-    name: "NesiVar",
-    tagline: "AI-powered vehicle insight platform.",
-    description:
-      "Intelligent vehicle analysis powered by AI. Identify issues, track service history, and make informed decisions about any vehicle.",
-    tag: "AI — MOBILE",
-  },
-  {
-    name: "Raftan",
-    tagline: "AI food and label analysis.",
-    description:
-      "Scan any food label and get instant AI-powered nutritional insights, allergen detection, and personalized health scoring.",
-    tag: "AI — HEALTH",
-  },
-  {
-    name: "WisePlates",
-    tagline: "CRM and client management for dietitians.",
-    description:
-      "A full-stack practice management platform for nutrition professionals. Track clients, plans, progress, and billing in one place.",
-    tag: "PLATFORM — B2B",
-  },
-];
+// Brand names are not translated
+const PRODUCT_NAMES = ["NesiVar", "Raftan", "WisePlates"];
 
 export default function ProductsScene() {
+  const { t } = useLanguage();
+  const products = PRODUCT_NAMES.map((name, i) => ({ name, ...t.products.items[i] }));
   return (
     <section
       id="products"
@@ -47,7 +29,7 @@ export default function ProductsScene() {
 
       {/* Lamp reveal header */}
       <LampContainer className="min-h-[50vh] md:min-h-[60vh]">
-        <SectionLabel index="//04" title="PRODUCTS" className="mb-5" />
+        <SectionLabel index="//04" title={t.nav.products} className="mb-5" />
         {/* h2 — correct level after h1 in hero (ui-ux-pro-max §1 heading-hierarchy) */}
         <h2
           id="products-heading"
@@ -59,13 +41,13 @@ export default function ProductsScene() {
             color: "var(--fg)",
           }}
         >
-          Products we&apos;ve built{" "}
+          {t.products.headingPre}
           <em className="not-italic" style={{ color: "var(--color-text-muted)" }}>
-            and shipped.
+            {t.products.headingEm}
           </em>
         </h2>
         <p className="t-body text-center mt-6" style={{ maxWidth: "44ch" }}>
-          Real products in the market, built end-to-end by RussellCode.
+          {t.products.sub}
         </p>
       </LampContainer>
 
@@ -84,7 +66,7 @@ export default function ProductsScene() {
           className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
           role="list"
         >
-          {PRODUCTS.map((p, i) => (
+          {products.map((p, i) => (
             <li key={p.name} style={{ listStyle: "none" }}>
               <ProductCard {...p} index={i} />
             </li>
