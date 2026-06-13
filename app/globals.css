@@ -207,6 +207,10 @@ button, a, [role="button"] {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+/* ━━━ NESIVAR LANDING (no custom cursor on these static pages) ━━ */
+.nv-scope, .nv-scope * { cursor: auto; }
+.nv-scope a, .nv-scope button, .nv-scope summary { cursor: pointer; }
 :focus:not(:focus-visible) { outline: none; }
 
 /* ━━━ TICKER / MARQUEE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */

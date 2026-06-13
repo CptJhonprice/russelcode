@@ -1,0 +1,52 @@
+# RussellCode
+
+> RussellCode is a software studio that designs and builds AI-native products, mobile apps, and scalable software systems. Website: https://www.russellcode.com
+
+## Products
+
+### NesiVar — AI-powered OBD-II car analysis app
+- URL (Turkish): https://www.russellcode.com/nesivar
+- URL (English): https://www.russellcode.com/en/nesivar
+- App Store: https://apps.apple.com/us/app/nesivar-ai-analysis/id6771038327
+- Platform: iOS
+- Price: Free download with in-app purchases
+
+NesiVar is an iOS app that helps you make the right decision before buying a
+used car. It connects to the vehicle's OBD-II port with a Vgate iCar Pro V2.1
+BLE adapter, reads real ECU data (engine, fuel, exhaust and sensor data), and
+interprets it with AI to produce a clear report and a confidence score. Instead
+of trusting the dealer's or seller's word, you look at the car's own data.
+
+What NesiVar provides:
+- Confidence Score — the car's overall condition at a glance.
+- Fault codes (DTC) — hidden or recently cleared trouble codes.
+- Live engine data — RPM, temperature, fuel system and sensor readings.
+- Chronic issues — known faults specific to a make/model/year, with an estimated
+  repair cost category.
+- Manufacturer-specific data — e.g. DPF soot level, oil life on supported cars.
+- Missing-data analysis — non-responding sensors are treated as a signal, not hidden.
+
+Without an adapter, NesiVar has a "pre-evaluation" mode: enter make, model, year
+and fuel type to see the known chronic issues for that vehicle before going to
+see the car.
+
+Who it is for: people buying a used car who want an independent pre-check,
+people who want to verify a dealer's claims with data, and current owners
+curious about their car's health.
+
+Requirements: an OBD-II / SAE J1979 compatible vehicle (generally 2004 and
+newer), a Vgate iCar Pro V2.1 BLE OBD-II adapter, and a Bluetooth-capable iPhone.
+
+Important: NesiVar does not replace a professional inspection. Its confidence
+score and analyses are informational; consult a qualified expert for a final
+purchase decision.
+
+Developer: RussellCode (https://www.russellcode.com)
+
+## Other products
+- Raftan — AI-powered food-label analysis app.
+- WisePlates — a B2B CRM platform for dietitians.
+
+## Contact
+- Website: https://www.russellcode.com
+- Email: destek@russellcode.com

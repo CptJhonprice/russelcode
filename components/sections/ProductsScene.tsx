@@ -11,9 +11,18 @@ const AmbientField = dynamic(() => import("@/components/three/AmbientField"), { 
 // Brand names are not translated
 const PRODUCT_NAMES = ["NesiVar", "Raftan", "WisePlates"];
 
+// Internal landing pages for products that have one (per language)
+const PRODUCT_HREFS: Record<string, { tr: string; en: string }> = {
+  NesiVar: { tr: "/nesivar", en: "/en/nesivar" },
+};
+
 export default function ProductsScene() {
-  const { t } = useLanguage();
-  const products = PRODUCT_NAMES.map((name, i) => ({ name, ...t.products.items[i] }));
+  const { t, lang } = useLanguage();
+  const products = PRODUCT_NAMES.map((name, i) => ({
+    name,
+    ...t.products.items[i],
+    href: PRODUCT_HREFS[name]?.[lang],
+  }));
   return (
     <section
       id="products"

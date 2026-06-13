@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 interface ProductCardProps {
@@ -9,6 +10,8 @@ interface ProductCardProps {
   description: string;
   tag: string;
   index: number;
+  /** When set, the whole card becomes a crawlable link to this route. */
+  href?: string;
 }
 
 /**
@@ -21,7 +24,7 @@ interface ProductCardProps {
  * - Color tokens from @theme (§6 color-semantic)
  * - Canvas design system: geometric corner accents, systematic visual language
  */
-export default function ProductCard({ name, tagline, description, tag, index }: ProductCardProps) {
+export default function ProductCard({ name, tagline, description, tag, index, href }: ProductCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
   const [spotlight, setSpotlight] = useState({ x: 50, y: 50 });
@@ -77,6 +80,15 @@ export default function ProductCard({ name, tagline, description, tag, index }: 
           transition: "background-color 200ms var(--ease-out), border-color 200ms var(--ease-out)",
         }}
       >
+        {/* Stretched link — makes the whole card a crawlable, tappable link */}
+        {href && (
+          <Link
+            href={href}
+            className="absolute inset-0 z-20"
+            aria-label={`${name} — ${tagline}`}
+          />
+        )}
+
         {/* Cursor-follow spotlight — opacity only (§7 transform-performance) */}
         <div
           aria-hidden="true"
@@ -177,13 +189,13 @@ export default function ProductCard({ name, tagline, description, tag, index }: 
           {description}
         </p>
 
-        {/* EXPLORE cue — opacity+transform only (§7) */}
+        {/* EXPLORE cue — opacity+transform only (§7). Always visible on linked cards. */}
         <div
           className="mt-6 flex items-center gap-2 t-label"
           style={{
             color: "var(--color-accent)",
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateX(0)" : "translateX(-10px)",
+            opacity: hovered || href ? 1 : 0,
+            transform: hovered || href ? "translateX(0)" : "translateX(-10px)",
             transition: "opacity 200ms var(--ease-out), transform 200ms var(--ease-out)",
           }}
           aria-hidden="true"
